@@ -1,0 +1,69 @@
+/* ============================================================
+   EFFECTS — Hasan Abuzaid Design System
+   Radii, hairline borders, restrained shadows, and the signature
+   slate-blue glow. Quiet luxury — no heavy drop shadows.
+   ============================================================ */
+:root {
+  /* ---- Corner radii (soft, 4–8px; never pill for surfaces) ---- */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 999px;   /* tags / chips only */
+
+  /* ---- Borders ---- */
+  --border:        1px solid var(--border-hairline);
+  --border-strong-rule: 1px solid var(--border-strong);
+
+  /* ---- Shadows (subtle, cool-tinted, never grey-on-white) ---- */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+  --shadow-md: 0 8px 24px -12px rgba(0,0,0,0.6);
+  --shadow-lg: 0 24px 60px -20px rgba(0,0,0,0.7);
+
+  /* ---- The signature glow (accent). Use on hover / hero. ---- */
+  --glow-soft:   0 0 0 1px var(--accent-tint), 0 8px 30px -10px var(--accent-glow);
+  --glow-ring:   0 0 0 1px var(--accent-600);
+  --glow-hover:  0 0 24px -4px var(--accent-glow);
+  --focus-shadow: 0 0 0 3px var(--focus-ring);
+
+  /* ---- Aurora / radial hero glow (apply as background) ---- */
+  --aurora: radial-gradient(60% 50% at 70% 20%, rgba(125,168,196,0.16) 0%, rgba(125,168,196,0) 70%),
+            radial-gradient(50% 40% at 20% 80%, rgba(143,166,142,0.08) 0%, rgba(143,166,142,0) 70%);  /* @kind other */
+
+  /* ---- Motion ---- */
+  --ease-out:   cubic-bezier(0.22, 1, 0.36, 1);   /* @kind other */
+  --ease-in-out:cubic-bezier(0.65, 0, 0.35, 1);   /* @kind other */
+  --dur-fast:   160ms;   /* @kind other */
+  --dur-base:   260ms;   /* @kind other */
+  --dur-slow:   520ms;   /* @kind other */
+
+  /* ---- Backdrop blur (nav solidify, overlays) ---- */
+  --blur-nav: saturate(140%) blur(14px);   /* @kind other */
+}
+
+/* ============================================================
+   Interactive surface hover — driven by native :hover so the browser
+   always clears the accent glow the instant the pointer leaves (no
+   stranded / held glow). box-shadow is intentionally NOT transitioned,
+   so the glow snaps off cleanly rather than lingering.
+   ============================================================ */
+.project-card:hover {
+  border-color: var(--accent-600);
+  box-shadow: var(--glow-soft);
+  transform: translateY(-2px);
+}
+.project-card:hover .project-card__action { color: var(--accent-400); }
+.project-card:hover .project-card__arrow { transform: translate(3px, -3px); }
+
+/* VideoFacade reels — same native :hover treatment. Suppressed once playing. */
+.video-facade:not(.is-playing):hover {
+  border-color: var(--accent-600);
+  box-shadow: var(--glow-soft);
+}
+.video-facade:not(.is-playing):hover .video-facade__poster { filter: none; }
+.video-facade:not(.is-playing):hover .video-facade__play {
+  background: var(--accent-600);
+  border-color: var(--accent-500);
+  box-shadow: var(--glow-hover);
+}
+.video-facade:not(.is-playing):hover .video-facade__tri { border-left-color: var(--text-on-accent); }

@@ -1,0 +1,79 @@
+/* ============================================================
+   COLORS — Hasan Abuzaid Design System
+   Dark & cinematic. Cool near-black backgrounds with a blue
+   undertone, cool off-white text, slate mid-tones, and a single
+   restrained slate-blue accent. Never pure black, never neon.
+   ============================================================ */
+:root {
+  /* ---- Base ink scale (cool near-blacks → surfaces) ---- */
+  --ink-900: #0A0C10;   /* page background — cool near-black */
+  --ink-850: #0C0F14;
+  --ink-800: #0E1116;   /* recessed background */
+  --ink-750: #12161C;
+  --ink-700: #151A21;   /* card / panel base */
+  --ink-650: #1A1F26;   /* raised surface */
+  --ink-600: #20262F;   /* hover surface */
+
+  /* ---- Hairlines & borders (slate) ---- */
+  --line-900: #1B212A;  /* faint divider */
+  --line-800: #232A34;  /* default hairline */
+  --line-700: #2A323C;  /* visible border */
+  --line-600: #353F4B;  /* strong / focused border */
+
+  /* ---- Foreground (cool off-white → muted slate) ---- */
+  --fg-0:  #F3F6FA;     /* highest-contrast headings */
+  --fg-1:  #E7EBF0;     /* primary text */
+  --fg-2:  #B6BFCB;     /* secondary text */
+  --fg-3:  #8A93A0;     /* muted slate */
+  --fg-4:  #5C646F;     /* faint / captions */
+  --fg-5:  #3E4651;     /* disabled */
+
+  /* ---- Accent — single slate-blue. Calm, desaturated. ---- */
+  --accent-700: #5C86A3;   /* pressed */
+  --accent-600: #7DA8C4;   /* base accent */
+  --accent-500: #9DC2D9;   /* hover / lighter */
+  --accent-400: #BBD6E6;   /* brightest highlight */
+  --accent-tint:  rgba(125, 168, 196, 0.12);  /* glow fill / soft bg */
+  --accent-tint-2: rgba(125, 168, 196, 0.20); /* stronger tint */
+  --accent-glow:  rgba(125, 168, 196, 0.35);  /* hover glow */
+
+  /* ---- Sage — secondary cool tone, used VERY sparingly ----
+     (kept available for a single optional highlight; the brand
+     rule is one accent, so prefer slate-blue above.) */
+  --sage-600: #8FA68E;
+  --sage-tint: rgba(143, 166, 142, 0.12);
+
+  /* ---- Status (desaturated to fit the cool palette) ---- */
+  --ok-600:   #7FB39B;
+  --warn-600: #C9A87C;
+  --error-600:#C68A8A;
+
+  /* ============================================================
+     SEMANTIC ALIASES — reach for these in components/kits.
+     ============================================================ */
+  --surface-page:    var(--ink-900);
+  --surface-sunken:  var(--ink-800);
+  --surface-raised:  var(--ink-700);
+  --surface-card:    var(--ink-700);
+  --surface-hover:   var(--ink-650);
+  --surface-active:  var(--ink-600);
+
+  --text-strong:   var(--fg-0);
+  --text-primary:  var(--fg-1);
+  --text-secondary:var(--fg-2);
+  --text-muted:    var(--fg-3);
+  --text-faint:    var(--fg-4);
+  --text-disabled: var(--fg-5);
+  --text-accent:   var(--accent-500);
+  --text-on-accent:#0A0C10;
+
+  --border-faint:    var(--line-900);
+  --border-hairline: var(--line-800);
+  --border-strong:   var(--line-700);
+  --border-focus:    var(--accent-600);
+
+  --accent:        var(--accent-600);
+  --accent-hover:  var(--accent-500);
+  --accent-press:  var(--accent-700);
+  --focus-ring:    var(--accent-glow);
+}
