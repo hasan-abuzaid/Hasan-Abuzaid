@@ -1,0 +1,9 @@
+/* ============================================================
+   FONTS — Hasan Abuzaid Design System
+   Display: Space Grotesk (characterful modern grotesque)
+   Body:    Geist (clean, neutral modern grotesque)
+   Both loaded via Google Fonts CDN. For production / offline,
+   self-host the .woff2 binaries and replace this import with
+   local @font-face rules. (Flagged to the user.)
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');

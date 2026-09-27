@@ -1,0 +1,68 @@
+/* ============================================================
+   TYPOGRAPHY — Hasan Abuzaid Design System
+   All sans-serif. Display = Space Grotesk (personality, tight
+   tracking at large sizes). Body = Geist (neutral, legible).
+   Hierarchy is carried by weight + size contrast, not serifs.
+   ============================================================ */
+:root {
+  /* ---- Families ---- */
+  --font-display: 'Space Grotesk', 'Geist', ui-sans-serif, sans-serif;
+  --font-body:    'Geist', 'Space Grotesk', ui-sans-serif, sans-serif;
+  --font-mono:    ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* ---- Weights ---- */
+  --fw-light:  300;      /* @kind other */
+  --fw-regular:400;      /* @kind other */
+  --fw-medium: 500;      /* @kind other */
+  --fw-semibold:600;     /* @kind other */
+  --fw-bold:   700;      /* @kind other */
+
+  /* ---- Type scale (px). Display sizes are clamps elsewhere. ---- */
+  --text-2xs: 11px;
+  --text-xs:  12px;
+  --text-sm:  14px;
+  --text-base:16px;
+  --text-md:  18px;
+  --text-lg:  21px;
+  --text-xl:  26px;
+  --text-2xl: 33px;
+  --text-3xl: 42px;
+  --text-4xl: 56px;
+  --text-5xl: 72px;
+  --text-6xl: 96px;
+
+  /* ---- Line heights ---- */
+  --leading-tight:   1.05;
+  --leading-snug:    1.18;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.65;
+
+  /* ---- Letter spacing ---- */
+  --tracking-tighter: -0.04em;  /* big display */
+  --tracking-tight:   -0.02em;  /* headings */
+  --tracking-normal:   0em;
+  --tracking-wide:     0.04em;
+  --tracking-wider:    0.14em;  /* eyebrows / labels (uppercase) */
+
+  /* ============================================================
+     SEMANTIC ROLES
+     ============================================================ */
+  --type-display:   var(--fw-medium) var(--text-6xl)/var(--leading-tight) var(--font-display);
+  --type-h1:        var(--fw-medium) var(--text-4xl)/var(--leading-snug) var(--font-display);
+  --type-h2:        var(--fw-medium) var(--text-3xl)/var(--leading-snug) var(--font-display);
+  --type-h3:        var(--fw-medium) var(--text-2xl)/var(--leading-snug) var(--font-display);
+  --type-h4:        var(--fw-semibold) var(--text-lg)/var(--leading-snug) var(--font-display);
+  --type-body-lg:   var(--fw-regular) var(--text-md)/var(--leading-relaxed) var(--font-body);
+  --type-body:      var(--fw-regular) var(--text-base)/var(--leading-normal) var(--font-body);
+  --type-body-sm:   var(--fw-regular) var(--text-sm)/var(--leading-normal) var(--font-body);
+  --type-caption:   var(--fw-regular) var(--text-xs)/var(--leading-normal) var(--font-body);
+}
+
+/* Eyebrow / overline label — uppercase, wide tracking, muted.
+   Apply via class where helpful. */
+.ds-eyebrow {
+  font: var(--fw-medium) var(--text-xs)/1 var(--font-body);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
