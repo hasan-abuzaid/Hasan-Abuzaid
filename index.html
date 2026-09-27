@@ -29,6 +29,31 @@
   [data-reveal="in"] [data-rule]{transform:scaleX(1);}
   [data-reel] image-slot{display:block;transition:transform 1100ms cubic-bezier(0.22,1,0.36,1);}
   [data-reel]:hover image-slot{transform:scale(1.07);}
+  @media (max-width:760px){
+    [data-m~="wrap"]{padding:72px 20px !important;}
+    [data-m~="wrap"][data-m~="stack"]{padding:48px 20px 64px !important;gap:36px !important;}
+    [data-m~="hwrap"]{padding:0 14px !important;gap:10px !important;}
+    [data-m~="fwrap"]{padding:28px 20px 96px !important;}
+    [data-m~="stack"]{grid-template-columns:minmax(0,1fr) !important;gap:16px !important;}
+    [data-m~="xp"]{gap:8px !important;padding:22px 12px !important;}
+    [data-m~="lang"]{gap:0 !important;}
+    [data-m~="lang"] > *{border-right:0 !important;border-bottom:1px solid rgba(143,166,142,0.2);}
+    [data-m~="lang"] > *:last-child{border-bottom:0;}
+    [data-m~="contact"]{gap:0 !important;}
+    [data-m~="contact"] > *{padding:20px 0 !important;border-right:0 !important;border-bottom:1px solid #232A34;}
+    [data-m~="row"]{grid-template-columns:32px minmax(0,1fr) !important;gap:6px 14px !important;padding:18px 4px !important;}
+    [data-m~="row"] > :nth-child(n+3){grid-column:2;}
+    [data-m~="reels"]{grid-template-columns:none !important;grid-auto-flow:column;grid-auto-columns:64%;overflow-x:auto;scroll-snap-type:x mandatory;margin-left:-20px;margin-right:-20px;padding:0 20px 6px;scrollbar-width:none;}
+    [data-m~="reels"]::-webkit-scrollbar{display:none;}
+    [data-m~="reels"] > *{scroll-snap-align:start;}
+    [data-m~="hnav"]{flex:1 1 auto !important;overflow-x:auto;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 10px,#000 calc(100% - 18px),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 10px,#000 calc(100% - 18px),transparent 100%);}
+    [data-m~="hnav"]::-webkit-scrollbar{display:none;}
+    [data-m~="hnav"] button{padding:9px 10px !important;}
+    [data-m~="rail"]{display:none !important;}
+    [data-m~="dock"]{left:14px !important;right:14px !important;bottom:14px !important;}
+    [data-m~="dock"] > a{flex:1 1 0;justify-content:center;padding:14px 12px !important;}
+    [data-m~="lb"]{padding:14px !important;}
+  }
   @media (prefers-reduced-motion:reduce){*{animation:none !important;}[data-rule]{transform:none !important;}[data-reel]:hover image-slot{transform:none;}}
 </style>
 </helmet>
@@ -37,7 +62,7 @@
   <div style="height:100%;width:{{ progressPct }};background:{{ liveHue }};box-shadow:0 0 14px {{ liveGlow }};transition:width 120ms linear,background 420ms cubic-bezier(0.22,1,0.36,1);"></div>
 </div>
 
-<nav aria-label="Sections" style="position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:65;display:flex;flex-direction:column;gap:14px;align-items:flex-end;pointer-events:none;">
+<nav data-m="rail" aria-label="Sections" style="position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:65;display:flex;flex-direction:column;gap:14px;align-items:flex-end;pointer-events:none;">
   <sc-for list="{{ chapters }}" as="ch" hint-placeholder-count="8">
     <button type="button" onClick="{{ ch.go }}" title="{{ ch.label }}" style="display:flex;align-items:center;gap:10px;padding:0;background:none;border:0;cursor:pointer;pointer-events:auto;width:fit-content;">
       <span style="font:500 10px/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;white-space:nowrap;overflow:hidden;pointer-events:none;max-width:{{ ch.labelWidth }};opacity:{{ ch.labelOpacity }};color:{{ ch.hue }};transition:opacity 320ms cubic-bezier(0.22,1,0.36,1),max-width 320ms cubic-bezier(0.22,1,0.36,1);">{{ ch.label }}</span>
@@ -46,17 +71,17 @@
   </sc-for>
 </nav>
 
-<div style="position:fixed;right:28px;bottom:28px;z-index:70;display:flex;gap:10px;opacity:{{ dockOpacity }};transform:translate3d(0,{{ dockShift }},0);transition:opacity 420ms cubic-bezier(0.22,1,0.36,1),transform 420ms cubic-bezier(0.22,1,0.36,1);pointer-events:{{ dockPointer }};">
+<div data-m="dock" style="position:fixed;right:28px;bottom:28px;z-index:70;display:flex;gap:10px;opacity:{{ dockOpacity }};transform:translate3d(0,{{ dockShift }},0);transition:opacity 420ms cubic-bezier(0.22,1,0.36,1),transform 420ms cubic-bezier(0.22,1,0.36,1);pointer-events:{{ dockPointer }};">
   <a href="https://drive.google.com/file/d/1qOxDuRTNwKpw93RjWQCeSmDdZRd1dQSW/view?usp=sharing" target="_blank" rel="noreferrer" style="display:inline-flex;align-items:center;gap:8px;padding:13px 20px;border-radius:6px;background:rgba(14,17,22,0.86);backdrop-filter:blur(12px) saturate(1.4);border:1px solid #2A323C;color:#E7EBF0;font:500 14px/1 'Geist',sans-serif;text-decoration:none;transition:border-color 320ms cubic-bezier(0.22,1,0.36,1),box-shadow 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="border-color:rgba(125,168,196,0.7);box-shadow:0 0 0 1px rgba(125,168,196,0.25), 0 16px 40px -20px rgba(125,168,196,0.55);">Download CV</a>
   <a href="mailto:hasan.abuzaid04@gmail.com" style="display:inline-flex;align-items:center;gap:8px;padding:13px 20px;border-radius:6px;background:rgba(125,168,196,0.16);backdrop-filter:blur(12px) saturate(1.4);border:1px solid rgba(125,168,196,0.5);color:#9DC2D9;font:500 14px/1 'Geist',sans-serif;text-decoration:none;transition:background 320ms cubic-bezier(0.22,1,0.36,1),box-shadow 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="background:rgba(125,168,196,0.26);box-shadow:0 16px 40px -20px rgba(125,168,196,0.6);">Get in touch</a>
 </div>
 
 <header style="position:fixed;top:0;left:0;right:0;z-index:64;height:68px;display:flex;align-items:center;background:{{ navBg }};backdrop-filter:{{ navBlur }};border-bottom:1px solid {{ navBorder }};transition:background 420ms cubic-bezier(0.22,1,0.36,1),border-color 520ms cubic-bezier(0.22,1,0.36,1),backdrop-filter 420ms cubic-bezier(0.22,1,0.36,1);">
-  <div style="width:100%;max-width:1200px;margin:0 auto;padding:0 48px;display:flex;align-items:center;justify-content:space-between;gap:20px;min-width:0;">
+  <div data-m="hwrap" style="width:100%;max-width:1200px;margin:0 auto;padding:0 48px;display:flex;align-items:center;justify-content:space-between;gap:20px;min-width:0;">
     <a href="#home" onClick="{{ goHome }}" style="flex:none;display:flex;align-items:baseline;gap:2px;text-decoration:none;font:600 19px/1 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;">
       <span style="flex:none;">Hasan</span><span style="flex:none;width:5px;height:5px;border-radius:999px;background:{{ liveHue }};box-shadow:0 0 10px {{ liveGlow }};transition:background 520ms cubic-bezier(0.22,1,0.36,1),box-shadow 520ms cubic-bezier(0.22,1,0.36,1);"></span>
     </a>
-    <nav style="flex:0 1 auto;min-width:0;display:flex;align-items:center;gap:2px;">
+    <nav data-m="hnav" style="flex:0 1 auto;min-width:0;display:flex;align-items:center;gap:2px;">
       <sc-for list="{{ navItems }}" as="ch" hint-placeholder-count="5">
         <button type="button" onClick="{{ ch.go }}" style="position:relative;flex:none;white-space:nowrap;padding:9px 14px;border:0;border-radius:6px;background:{{ ch.navBg }};cursor:pointer;font:500 12.5px/1 'Geist',sans-serif;color:{{ ch.navColor }};transition:color 320ms cubic-bezier(0.22,1,0.36,1),background 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="color:#E7EBF0;background:rgba(255,255,255,0.045);">
           {{ ch.label }}
@@ -75,7 +100,7 @@
 
 <section id="home" data-screen-label="Hero" style="position:relative;overflow:hidden;border-bottom:1px solid #232A34;">
   <div style="position:absolute;inset:0;background:radial-gradient(60% 50% at 72% 18%, rgba(125,168,196,0.16) 0%, rgba(125,168,196,0) 70%), radial-gradient(50% 40% at 12% 88%, rgba(143,166,142,0.08) 0%, rgba(143,166,142,0) 70%);animation:auroraDrift 26s cubic-bezier(0.4,0,0.6,1) infinite alternate;" aria-hidden="true"></div>
-  <div style="position:relative;max-width:1200px;margin:0 auto;padding:104px 48px 88px;display:grid;grid-template-columns:1fr 1.05fr;gap:56px;align-items:center;">
+  <div data-m="wrap stack" style="position:relative;max-width:1200px;margin:0 auto;padding:104px 48px 88px;display:grid;grid-template-columns:1fr 1.05fr;gap:56px;align-items:center;">
     <div>
       <div style="display:flex;align-items:center;gap:12px;height:14px;">
         <span style="width:6px;height:6px;border-radius:999px;background:{{ roleHue }};box-shadow:0 0 12px {{ roleHue }};transition:background 520ms cubic-bezier(0.22,1,0.36,1),box-shadow 520ms cubic-bezier(0.22,1,0.36,1);"></span>
@@ -102,12 +127,12 @@
 <section id="about" data-screen-label="About" style="position:relative;overflow:hidden;background:#0A0C10;border-bottom:1px solid #232A34;transition:background 520ms cubic-bezier(0.22,1,0.36,1);">
   <div aria-hidden="true" style="position:absolute;top:56px;right:44px;font:600 clamp(96px,13vw,190px)/0.78 'Space Grotesk',sans-serif;letter-spacing:-0.06em;color:#C48D9E;opacity:0.055;pointer-events:none;user-select:none;">01</div>
   <div style="position:absolute;inset:0;background:radial-gradient(58% 48% at 68% 12%, rgba(196,141,158,0.15) 0%, rgba(196,141,158,0) 70%), radial-gradient(46% 40% at 10% 92%, rgba(196,141,158,0.06) 0%, rgba(196,141,158,0) 70%);animation:auroraDrift 26s cubic-bezier(0.4,0,0.6,1) infinite alternate;" aria-hidden="true"></div>
-  <div data-reveal="1" style="position:relative;max-width:1200px;margin:0 auto;padding:104px 48px;">
+  <div data-m="wrap" data-reveal="1" style="position:relative;max-width:1200px;margin:0 auto;padding:104px 48px;">
   <div style="display:flex;align-items:center;gap:14px;">
     <span data-rule="1" style="width:34px;height:1px;background:#C48D9E;"></span>
     <span style="font:500 12px/1 'Geist',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#C48D9E;">01 — About</span>
   </div>
-  <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:72px;margin-top:28px;align-items:start;">
+  <div data-m="stack" style="display:grid;grid-template-columns:1.4fr 1fr;gap:72px;margin-top:28px;align-items:start;">
     <div>
       <h2 style="margin:0;font:500 clamp(30px,3.4vw,44px)/1.12 'Space Grotesk',sans-serif;letter-spacing:-0.03em;color:#F3F6FA;max-width:26ch;">Two disciplines, one way of working.</h2>
       <p style="margin:24px 0 0;font:400 17px/1.65 'Geist',sans-serif;color:#B6BFCB;max-width:64ch;text-wrap:pretty;">I'm a mechatronics engineering student in Amman. On the engineering side I work across robotics, computer vision and embedded systems, the loop from sensor to decision to motion. On the camera side I shoot and cut commercial work for brands and creators. Both come down to the same thing: understand the system, then make every part of it deliberate.</p>
@@ -149,7 +174,7 @@
 <section id="education" data-screen-label="Education" style="position:relative;overflow:hidden;background:#0C1014;border-bottom:1px solid #232A34;transition:background 520ms cubic-bezier(0.22,1,0.36,1);">
   <div aria-hidden="true" style="position:absolute;top:56px;right:44px;font:600 clamp(96px,13vw,190px)/0.78 'Space Grotesk',sans-serif;letter-spacing:-0.06em;color:#8FA68E;opacity:0.055;pointer-events:none;user-select:none;">02</div>
   <div style="position:absolute;inset:0;background:radial-gradient(58% 48% at 22% 18%, rgba(143,166,142,0.15) 0%, rgba(143,166,142,0) 70%), radial-gradient(46% 40% at 86% 88%, rgba(143,166,142,0.06) 0%, rgba(143,166,142,0) 70%);animation:auroraDrift 26s cubic-bezier(0.4,0,0.6,1) infinite alternate;" aria-hidden="true"></div>
-  <div data-reveal="1" style="position:relative;max-width:1200px;margin:0 auto;padding:104px 48px;">
+  <div data-m="wrap" data-reveal="1" style="position:relative;max-width:1200px;margin:0 auto;padding:104px 48px;">
   <div style="display:flex;align-items:center;gap:14px;">
     <span data-rule="1" style="width:34px;height:1px;background:#8FA68E;"></span>
     <span style="font:500 12px/1 'Geist',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#8FA68E;">02 — Education</span>
@@ -158,7 +183,7 @@
     <h2 style="margin:0;font:500 clamp(30px,3.4vw,44px)/1.12 'Space Grotesk',sans-serif;letter-spacing:-0.03em;color:#F3F6FA;max-width:24ch;">Trained on the German model.</h2>
     <p style="margin:0;font:400 15px/1.6 'Geist',sans-serif;color:#8A93A0;max-width:36ch;">A Jordanian–German double track: mechatronics at GJU, then a year inside the German system.</p>
   </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:48px;">
+  <div data-m="stack" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:48px;">
     <div style="display:flex;flex-direction:column;gap:16px;padding:28px;background:#151A21;border:1px solid #232A34;border-radius:8px;transition:border-color 320ms cubic-bezier(0.22,1,0.36,1),transform 320ms cubic-bezier(0.22,1,0.36,1),box-shadow 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="border-color:#8FA68E;transform:translateY(-3px);box-shadow:0 0 0 1px rgba(143,166,142,0.22), 0 18px 40px -22px rgba(143,166,142,0.35);">
       <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;">
         <span style="font:500 11px/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:#8FA68E;">Amman, Jordan</span>
@@ -197,7 +222,7 @@
       <span data-rule="1" style="width:34px;height:1px;background:#8FA68E;"></span>
       <span style="font:500 12px/1 'Geist',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#8FA68E;">Languages</span>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid rgba(143,166,142,0.28);border-radius:8px;background:rgba(143,166,142,0.045);overflow:hidden;">
+    <div data-m="stack lang" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid rgba(143,166,142,0.28);border-radius:8px;background:rgba(143,166,142,0.045);overflow:hidden;">
       <div style="display:flex;flex-direction:column;gap:8px;padding:24px 26px;border-right:1px solid rgba(143,166,142,0.2);">
         <span style="font:500 11px/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:#8FA68E;">Arabic</span>
         <span style="font:500 20px/1.2 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;">Native</span>
@@ -219,7 +244,7 @@
 <section id="experience" data-screen-label="Experience" style="position:relative;overflow:hidden;background:#0A0C10;border-bottom:1px solid #232A34;transition:background 520ms cubic-bezier(0.22,1,0.36,1);">
   <div aria-hidden="true" style="position:absolute;top:56px;right:44px;font:600 clamp(96px,13vw,190px)/0.78 'Space Grotesk',sans-serif;letter-spacing:-0.06em;color:#C4A47D;opacity:0.055;pointer-events:none;user-select:none;">03</div>
   <div style="position:absolute;inset:0;background:radial-gradient(58% 48% at 78% 22%, rgba(196,164,125,0.15) 0%, rgba(196,164,125,0) 70%), radial-gradient(46% 40% at 8% 84%, rgba(196,164,125,0.06) 0%, rgba(196,164,125,0) 70%);animation:auroraDrift 26s cubic-bezier(0.4,0,0.6,1) infinite alternate;" aria-hidden="true"></div>
-  <div data-reveal="1" style="position:relative;max-width:1200px;margin:0 auto;padding:104px 48px;">
+  <div data-m="wrap" data-reveal="1" style="position:relative;max-width:1200px;margin:0 auto;padding:104px 48px;">
   <div style="display:flex;align-items:center;gap:14px;">
     <span data-rule="1" style="width:34px;height:1px;background:#C4A47D;"></span>
     <span style="font:500 12px/1 'Geist',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#C4A47D;">03 — Experience</span>
@@ -227,7 +252,7 @@
   <h2 style="margin:22px 0 0;font:500 clamp(30px,3.4vw,44px)/1.12 'Space Grotesk',sans-serif;letter-spacing:-0.03em;color:#F3F6FA;">Where I've worked.</h2>
   <div style="margin-top:48px;display:flex;flex-direction:column;">
 
-    <div style="display:grid;grid-template-columns:180px 1fr;gap:40px;padding:26px 12px;margin:0 -12px;border-radius:6px;border-top:1px solid #232A34;transition:background 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="background:rgba(196,164,125,0.055);">
+    <div data-m="stack xp" style="display:grid;grid-template-columns:180px 1fr;gap:40px;padding:26px 12px;margin:0 -12px;border-radius:6px;border-top:1px solid #232A34;transition:background 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="background:rgba(196,164,125,0.055);">
       <div style="font:400 14px/1.5 'Geist',sans-serif;color:#8A93A0;font-variant-numeric:tabular-nums;">Jun 2026 — Sep 2026</div>
       <div>
         <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;">
@@ -239,7 +264,7 @@
       </div>
     </div>
 
-    <div style="display:grid;grid-template-columns:180px 1fr;gap:40px;padding:26px 12px;margin:0 -12px;border-radius:6px;border-top:1px solid #232A34;transition:background 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="background:rgba(196,164,125,0.055);">
+    <div data-m="stack xp" style="display:grid;grid-template-columns:180px 1fr;gap:40px;padding:26px 12px;margin:0 -12px;border-radius:6px;border-top:1px solid #232A34;transition:background 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="background:rgba(196,164,125,0.055);">
       <div style="font:400 14px/1.5 'Geist',sans-serif;color:#8A93A0;font-variant-numeric:tabular-nums;">Jun 2025 - Sep 2025</div>
       <div>
         <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;">
@@ -250,7 +275,7 @@
       </div>
     </div>
 
-    <div style="display:grid;grid-template-columns:180px 1fr;gap:40px;padding:26px 12px;margin:0 -12px;border-radius:6px;border-top:1px solid #232A34;transition:background 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="background:rgba(196,164,125,0.055);">
+    <div data-m="stack xp" style="display:grid;grid-template-columns:180px 1fr;gap:40px;padding:26px 12px;margin:0 -12px;border-radius:6px;border-top:1px solid #232A34;transition:background 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="background:rgba(196,164,125,0.055);">
       <div style="font:400 14px/1.5 'Geist',sans-serif;color:#8A93A0;font-variant-numeric:tabular-nums;">2019 — present</div>
       <div>
         <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;">
@@ -267,7 +292,7 @@
 <section id="engineering" data-screen-label="Engineering" style="position:relative;overflow:hidden;background:#0C1014;border-bottom:1px solid #232A34;transition:background 520ms cubic-bezier(0.22,1,0.36,1);">
   <div aria-hidden="true" style="position:absolute;top:56px;right:44px;font:600 clamp(96px,13vw,190px)/0.78 'Space Grotesk',sans-serif;letter-spacing:-0.06em;color:#7DBFC4;opacity:0.055;pointer-events:none;user-select:none;">04</div>
   <div style="position:absolute;inset:0;background:radial-gradient(58% 48% at 14% 14%, rgba(125,191,196,0.15) 0%, rgba(125,191,196,0) 70%), radial-gradient(46% 40% at 88% 78%, rgba(125,191,196,0.06) 0%, rgba(125,191,196,0) 70%);animation:auroraDrift 26s cubic-bezier(0.4,0,0.6,1) infinite alternate;" aria-hidden="true"></div>
-  <div data-reveal="1" style="position:relative;max-width:1200px;margin:0 auto;padding:104px 48px;">
+  <div data-m="wrap" data-reveal="1" style="position:relative;max-width:1200px;margin:0 auto;padding:104px 48px;">
   <div style="display:flex;align-items:center;gap:14px;">
     <span data-rule="1" style="width:34px;height:1px;background:#7DBFC4;"></span>
     <span style="font:500 12px/1 'Geist',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#7DBFC4;">04 — Engineering</span>
@@ -284,7 +309,7 @@
   </div>
 
   <sc-if value="{{ isCards }}" hint-placeholder-val="{{ true }}">
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:28px;align-items:stretch;">
+    <div data-m="stack" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:28px;align-items:stretch;">
       <sc-for list="{{ featured }}" as="p" hint-placeholder-count="3">
         <div data-reveal="1" data-spot="card" style="position:relative;height:100%;overflow:hidden;display:flex;flex-direction:column;background:#151A21;border:1px solid #232A34;border-radius:8px;padding:28px;transition:border-color 320ms cubic-bezier(0.22,1,0.36,1),transform 320ms cubic-bezier(0.22,1,0.36,1),box-shadow 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="border-color:#7DBFC4;transform:translateY(-3px);box-shadow:0 0 0 1px rgba(125,191,196,0.25), 0 18px 40px -20px rgba(125,191,196,0.35);">
           <span data-spotlight="1" aria-hidden="true" style="position:absolute;inset:0;opacity:0;transition:opacity 320ms cubic-bezier(0.22,1,0.36,1);pointer-events:none;"></span>
@@ -321,7 +346,7 @@
         </div>
         <div style="margin-top:16px;">
           <sc-for list="{{ moreProjects }}" as="p" hint-placeholder-count="6">
-            <div style="display:grid;grid-template-columns:44px 1fr 1.3fr auto;gap:24px;align-items:baseline;padding:18px 8px;border-top:1px solid #232A34;transition:background 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="background:#12161C;">
+            <div data-m="row" style="display:grid;grid-template-columns:44px 1fr 1.3fr auto;gap:24px;align-items:baseline;padding:18px 8px;border-top:1px solid #232A34;transition:background 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="background:#12161C;">
               <span style="font:500 12px/1.4 'Space Grotesk',sans-serif;color:#5C646F;font-variant-numeric:tabular-nums;">{{ p.index }}</span>
               <span style="font:500 16px/1.35 'Space Grotesk',sans-serif;letter-spacing:-0.015em;color:#E7EBF0;">{{ p.title }}</span>
               <span style="font:400 13px/1.55 'Geist',sans-serif;color:#8A93A0;text-wrap:pretty;">{{ p.short }}</span>
@@ -343,7 +368,7 @@
     <div style="margin-top:48px;">
       <sc-for list="{{ projects }}" as="p" hint-placeholder-count="7">
         <sc-if value="{{ p.hasRepo }}" hint-placeholder-val="{{ true }}">
-          <a href="{{ p.href }}" target="_blank" rel="noreferrer" style="display:grid;grid-template-columns:56px 1.1fr 1.4fr auto;gap:32px;align-items:center;padding:24px 8px;border-top:1px solid #232A34;text-decoration:none;" style-hover="background:#12161C;">
+          <a data-m="row" href="{{ p.href }}" target="_blank" rel="noreferrer" style="display:grid;grid-template-columns:56px 1.1fr 1.4fr auto;gap:32px;align-items:center;padding:24px 8px;border-top:1px solid #232A34;text-decoration:none;" style-hover="background:#12161C;">
             <span style="font:500 13px/1 'Space Grotesk',sans-serif;color:#5C646F;font-variant-numeric:tabular-nums;">{{ p.index }}</span>
             <span style="font:500 22px/1.2 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;">{{ p.title }}</span>
             <span style="font:400 14px/1.55 'Geist',sans-serif;color:#8A93A0;">{{ p.short }}</span>
@@ -351,7 +376,7 @@
           </a>
         </sc-if>
         <sc-if value="{{ p.noRepo }}" hint-placeholder-val="{{ false }}">
-          <div style="display:grid;grid-template-columns:56px 1.1fr 1.4fr auto;gap:32px;align-items:center;padding:24px 8px;border-top:1px solid #232A34;">
+          <div data-m="row" style="display:grid;grid-template-columns:56px 1.1fr 1.4fr auto;gap:32px;align-items:center;padding:24px 8px;border-top:1px solid #232A34;">
             <span style="font:500 13px/1 'Space Grotesk',sans-serif;color:#5C646F;font-variant-numeric:tabular-nums;">{{ p.index }}</span>
             <span style="font:500 22px/1.2 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;">{{ p.title }}</span>
             <span style="font:400 14px/1.55 'Geist',sans-serif;color:#8A93A0;">{{ p.short }}</span>
@@ -370,7 +395,7 @@
 </section>
 <section id="videography" data-screen-label="Videography" style="position:relative;overflow:hidden;background:#0E1116;transition:background 520ms cubic-bezier(0.22,1,0.36,1);border-bottom:1px solid #232A34;background:#0E1116;">
   <div aria-hidden="true" style="position:absolute;top:56px;right:44px;font:600 clamp(96px,13vw,190px)/0.78 'Space Grotesk',sans-serif;letter-spacing:-0.06em;color:#C48D7D;opacity:0.055;pointer-events:none;user-select:none;">05</div><div style="position:absolute;inset:0;background:radial-gradient(58% 48% at 72% 16%, rgba(196,141,125,0.15) 0%, rgba(196,141,125,0) 70%), radial-gradient(46% 40% at 18% 90%, rgba(196,164,125,0.07) 0%, rgba(196,164,125,0) 70%);animation:auroraDrift 26s cubic-bezier(0.4,0,0.6,1) infinite alternate;" aria-hidden="true"></div>
-  <div data-reveal="1" style="position:relative;max-width:1200px;margin:0 auto;padding:104px 48px;">
+  <div data-m="wrap" data-reveal="1" style="position:relative;max-width:1200px;margin:0 auto;padding:104px 48px;">
     <div style="display:flex;align-items:center;gap:14px;">
     <span data-rule="1" style="width:34px;height:1px;background:#C48D7D;"></span>
     <span style="font:500 12px/1 'Geist',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#C48D7D;">05 — Videography</span>
@@ -386,7 +411,7 @@
         <h3 style="margin:0;font:500 22px/1.2 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;">Selected reels</h3>
         <p style="margin:0;font:400 14px/1.6 'Geist',sans-serif;color:#8A93A0;max-width:40ch;">Five vertical edits, shot and cut end to end. Play to watch in place.</p>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:24px;">
+      <div data-m="reels" style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:24px;">
         <sc-for list="{{ reels }}" as="r" hint-placeholder-count="5">
           <div data-reveal="1" data-reel="1" style="position:relative;width:100%;aspect-ratio:9 / 16;border-radius:8px;border:1px solid #232A34;background:linear-gradient(160deg,#151A21,#0B0E12);overflow:hidden;transition:border-color 320ms cubic-bezier(0.22,1,0.36,1),transform 320ms cubic-bezier(0.22,1,0.36,1),box-shadow 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="border-color:#C48D7D;transform:translateY(-3px);box-shadow:0 0 0 1px rgba(196,141,125,0.28), 0 20px 44px -22px rgba(196,141,125,0.5);">
             <image-slot id="{{ r.slotId }}" src="{{ r.cover }}" shape="rect" fit="cover" placeholder="Drop reel cover"></image-slot>
@@ -409,7 +434,7 @@
 <section id="leadership" data-screen-label="Leadership" style="position:relative;overflow:hidden;background:#0A0C10;border-bottom:1px solid #232A34;transition:background 520ms cubic-bezier(0.22,1,0.36,1);">
   <div aria-hidden="true" style="position:absolute;top:56px;right:44px;font:600 clamp(96px,13vw,190px)/0.78 'Space Grotesk',sans-serif;letter-spacing:-0.06em;color:#9D93C4;opacity:0.055;pointer-events:none;user-select:none;">06</div>
   <div style="position:absolute;inset:0;background:radial-gradient(58% 48% at 26% 16%, rgba(157,147,196,0.15) 0%, rgba(157,147,196,0) 70%), radial-gradient(46% 40% at 82% 86%, rgba(157,147,196,0.06) 0%, rgba(157,147,196,0) 70%);animation:auroraDrift 26s cubic-bezier(0.4,0,0.6,1) infinite alternate;" aria-hidden="true"></div>
-  <div data-reveal="1" style="position:relative;max-width:1200px;margin:0 auto;padding:104px 48px;">
+  <div data-m="wrap" data-reveal="1" style="position:relative;max-width:1200px;margin:0 auto;padding:104px 48px;">
   <div style="display:flex;align-items:center;gap:14px;">
     <span data-rule="1" style="width:34px;height:1px;background:#9D93C4;"></span>
     <span style="font:500 12px/1 'Geist',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#9D93C4;">06 — Leadership</span>
@@ -419,7 +444,7 @@
     <p style="margin:0;font:400 15px/1.6 'Geist',sans-serif;color:#8A93A0;max-width:36ch;">Student leadership and volunteering, organising the rooms where the work gets shown.</p>
   </div>
 
-  <div style="display:grid;grid-template-columns:repeat(2,minmax(0,380px));gap:20px;margin-top:48px;justify-content:center;">
+  <div data-m="stack" style="display:grid;grid-template-columns:repeat(2,minmax(0,380px));gap:20px;margin-top:48px;justify-content:center;">
     <x-import component-from-global-scope="HasanAbuzaidPortfolioDesignSystem_4b31b8.Card" padding="{{ 26 }}" hint-size="100%,190px">
       <div style="font:500 11px/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:#9D93C4;">2024 — present</div>
       <div style="margin-top:14px;font:500 22px/1.2 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;">President</div>
@@ -433,7 +458,7 @@
     </x-import>
   </div>
 
-  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:20px;">
+  <div data-m="stack" style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:20px;">
     <div>
       <div style="position:relative;aspect-ratio:16 / 9;width:100%;border-radius:8px;border:1px solid #232A34;overflow:hidden;">
         <img src="uploads/leadership-1.jpg" alt="Innovation Club committee at a club-hosted evening event" style="display:block;width:100%;height:100%;object-fit:cover;filter:saturate(0.94);">
@@ -458,7 +483,7 @@
   <section id="accomplishments" data-screen-label="Accomplishments" style="position:relative;overflow:hidden;background:#0C1014;border-bottom:1px solid #232A34;transition:background 520ms cubic-bezier(0.22,1,0.36,1);">
   <div aria-hidden="true" style="position:absolute;top:56px;right:44px;font:600 clamp(96px,13vw,190px)/0.78 'Space Grotesk',sans-serif;letter-spacing:-0.06em;color:#8FA68E;opacity:0.055;pointer-events:none;user-select:none;">07</div>
     <div style="position:absolute;inset:0;background:radial-gradient(58% 48% at 50% 14%, rgba(143,166,142,0.15) 0%, rgba(157,147,196,0) 70%), radial-gradient(46% 40% at 88% 90%, rgba(157,147,196,0.06) 0%, rgba(157,147,196,0) 70%);animation:auroraDrift 26s cubic-bezier(0.4,0,0.6,1) infinite alternate;" aria-hidden="true"></div>
-    <div data-reveal="1" style="position:relative;max-width:1200px;margin:0 auto;padding:104px 48px;">
+    <div data-m="wrap" data-reveal="1" style="position:relative;max-width:1200px;margin:0 auto;padding:104px 48px;">
     <div style="display:flex;align-items:center;gap:14px;">
       <span data-rule="1" style="width:34px;height:1px;background:#8FA68E;"></span>
       <span style="font:500 12px/1 'Geist',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#8FA68E;">07 — Accomplishments</span>
@@ -467,7 +492,7 @@
       <h2 style="margin:0;font:500 clamp(30px,3.4vw,44px)/1.12 'Space Grotesk',sans-serif;letter-spacing:-0.03em;color:#F3F6FA;max-width:22ch;">Selected and placed.</h2>
       <p style="margin:0;font:400 15px/1.6 'Geist',sans-serif;color:#8A93A0;max-width:36ch;">Competitive selection, judged against a field.</p>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:48px;">
+    <div data-m="stack" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:48px;">
       <div style="display:flex;flex-direction:column;background:#151A21;border:1px solid #232A34;border-radius:8px;overflow:hidden;transition:border-color 320ms cubic-bezier(0.22,1,0.36,1),transform 320ms cubic-bezier(0.22,1,0.36,1),box-shadow 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="border-color:#8FA68E;transform:translateY(-3px);box-shadow:0 0 0 1px rgba(143,166,142,0.25), 0 18px 40px -20px rgba(143,166,142,0.35);">
         <div style="position:relative;width:100%;aspect-ratio:16 / 10;border-bottom:1px solid #232A34;">
           <image-slot id="accomplishment-fintech" src="uploads/accomplishment-fintech.jpg" shape="rect" fit="cover" placeholder="Drop hackathon photo"></image-slot>
@@ -496,7 +521,7 @@
 <section id="contact" data-screen-label="Contact" style="position:relative;overflow:hidden;background:#0A0C10;transition:background 520ms cubic-bezier(0.22,1,0.36,1);">
   <div aria-hidden="true" style="position:absolute;top:56px;right:44px;font:600 clamp(96px,13vw,190px)/0.78 'Space Grotesk',sans-serif;letter-spacing:-0.06em;color:#7DA8C4;opacity:0.055;pointer-events:none;user-select:none;">08</div>
   <div style="position:absolute;inset:0;background:radial-gradient(58% 48% at 50% 100%, rgba(125,168,196,0.15) 0%, rgba(125,168,196,0) 70%), radial-gradient(46% 40% at 85% 8%, rgba(143,166,142,0.07) 0%, rgba(143,166,142,0) 70%);animation:auroraDrift 26s cubic-bezier(0.4,0,0.6,1) infinite alternate;" aria-hidden="true"></div>
-  <div data-reveal="1" style="position:relative;max-width:1200px;margin:0 auto;padding:120px 48px;">
+  <div data-m="wrap" data-reveal="1" style="position:relative;max-width:1200px;margin:0 auto;padding:120px 48px;">
     <div style="display:flex;align-items:center;gap:14px;">
     <span data-rule="1" style="width:34px;height:1px;background:#7DA8C4;"></span>
     <span style="font:500 12px/1 'Geist',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#7DA8C4;">08 — Contact</span>
@@ -505,7 +530,7 @@
     <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:24px;">
       <p style="margin:0;font:400 17px/1.65 'Geist',sans-serif;color:#B6BFCB;max-width:52ch;">Open to engineering internships, freelance production work, and collaborations.</p>
     </div>
-    <div style="position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:56px;border-top:1px solid #232A34;">
+    <div data-m="stack contact" style="position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:56px;border-top:1px solid #232A34;">
       <a href="mailto:hasan.abuzaid04@gmail.com" style="display:flex;flex-direction:column;gap:8px;padding:24px 24px 24px 0;text-decoration:none;border-right:1px solid #232A34;transition:background 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="background:rgba(125,168,196,0.06);">
         <span style="font: 500 11px / 1 Geist, sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(92, 100, 111);">Email</span>
         <span style="font: 400 16px / 1.4 Geist, sans-serif; color: rgb(231, 235, 240);">hasan.abuzaid04@gmail.com</span>
@@ -527,7 +552,7 @@
 </section>
 
 <sc-if value="{{ lightboxOpen }}" hint-placeholder-val="{{ false }}">
-  <div onClick="{{ closeLightbox }}" style="position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:48px;background:rgba(6,8,11,0.88);backdrop-filter:blur(14px) saturate(1.2);cursor:zoom-out;">
+  <div data-m="lb" onClick="{{ closeLightbox }}" style="position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:48px;background:rgba(6,8,11,0.88);backdrop-filter:blur(14px) saturate(1.2);cursor:zoom-out;">
     <div onClick="{{ stopClick }}" style="position:relative;display:flex;flex-direction:column;gap:14px;align-items:center;max-height:100%;cursor:default;">
       <div style="display:flex;align-items:baseline;gap:14px;width:min(420px,86vw);">
         <span style="font:500 12px/1.3 'Geist',sans-serif;letter-spacing:0.1em;text-transform:uppercase;color:#C48D7D;">{{ activeReelPlatform }}</span>
@@ -548,7 +573,7 @@
 
 <footer style="border-top:1px solid #232A34;">
   <div aria-hidden="true" style="height:2px;background:linear-gradient(90deg,#7DA8C4,#C48D9E,#8FA68E,#C4A47D,#7DBFC4,#C48D7D,#9D93C4);opacity:0.5;"></div>
-  <div style="max-width:1200px;margin:0 auto;padding:32px 48px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;">
+  <div data-m="fwrap" style="max-width:1200px;margin:0 auto;padding:32px 48px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;">
     <div style="font:600 17px/1 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#B6BFCB;">Hasan<span style="color:#7DA8C4;">.</span></div>
     <div style="font:400 13px/1.4 'Geist',sans-serif;color:#5C646F;">Mechatronics engineering · Videography — Amman, Jordan</div>
   </div>
