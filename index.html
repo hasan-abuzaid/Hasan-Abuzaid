@@ -8,6 +8,9 @@
 <body>
 <x-dc>
 <helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap">
 <script src="./ds-base.js"></script>
 <script src="./de.js"></script>
 <script src="./image-slot.js"></script>
@@ -107,10 +110,10 @@
         <span style="font:500 12px/1 'Geist',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:{{ roleHue }};opacity:{{ roleOpacity }};transition:opacity 380ms cubic-bezier(0.22,1,0.36,1),color 520ms cubic-bezier(0.22,1,0.36,1);">{{ roleWord }}</span>
       </div>
       <h1 style="margin:22px 0 0;font:500 clamp(46px,6.4vw,84px)/1.02 'Space Grotesk',sans-serif;letter-spacing:-0.04em;color:#F3F6FA;">Hasan Abuzaid<span style="color:#7DA8C4;">.</span></h1>
-      <p style="margin:26px 0 0;font:400 19px/1.6 'Geist',sans-serif;color:#B6BFCB;max-width:48ch;text-wrap:pretty;">I build systems that sense, decide and move, and I tell stories with a camera. Engineering precision, shot like cinema.</p>
+      <p style="margin:26px 0 0;font:400 19px/1.6 'Geist',sans-serif;color:#B6BFCB;max-width:48ch;text-wrap:pretty;">I build systems that sense, decide and move.</p>
       <div style="display:flex;gap:14px;margin-top:36px;flex-wrap:wrap;">
-        <x-import component-from-global-scope="HasanAbuzaidPortfolioDesignSystem_4b31b8.Button" variant="primary" size="lg" href="#engineering" hint-size="auto,52px">Engineering work</x-import>
-        <x-import component-from-global-scope="HasanAbuzaidPortfolioDesignSystem_4b31b8.Button" variant="secondary" size="lg" href="#videography" hint-size="auto,52px">Watch the reel</x-import>
+        <a href="#engineering" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:15px 28px;white-space:nowrap;flex:none;font:500 16px/1 'Geist',sans-serif;letter-spacing:0.01em;border-radius:6px;text-decoration:none;transition:background 320ms cubic-bezier(0.22,1,0.36,1),border-color 320ms,box-shadow 320ms,color 320ms;background:#7DA8C4;border:1px solid #7DA8C4;color:#0A0C10;" style-hover="background:#9DC2D9;border-color:#9DC2D9;box-shadow:0 0 0 4px rgba(125,168,196,0.16), 0 10px 30px -10px rgba(125,168,196,0.5);">Engineering work</a>
+        <a href="#videography" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:15px 28px;white-space:nowrap;flex:none;font:500 16px/1 'Geist',sans-serif;letter-spacing:0.01em;border-radius:6px;text-decoration:none;transition:background 320ms cubic-bezier(0.22,1,0.36,1),border-color 320ms,box-shadow 320ms,color 320ms;background:transparent;border:1px solid #2A323C;color:#E7EBF0;" style-hover="border-color:#7DA8C4;box-shadow:0 0 0 4px rgba(125,168,196,0.12);">Watch the reel</a>
       </div>
     </div>
     <figure style="margin:0;display:flex;flex-direction:column;gap:12px;">
@@ -132,40 +135,32 @@
     <span data-rule="1" style="width:34px;height:1px;background:#C48D9E;"></span>
     <span style="font:500 12px/1 'Geist',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#C48D9E;">01 — About</span>
   </div>
-  <div data-m="stack" style="display:grid;grid-template-columns:1.4fr 1fr;gap:72px;margin-top:28px;align-items:start;">
+  <div data-m="stack" style="display:grid;grid-template-columns:1.1fr 1fr;gap:88px;margin-top:28px;align-items:start;">
     <div>
-      <h2 style="margin:0;font:500 clamp(30px,3.4vw,44px)/1.12 'Space Grotesk',sans-serif;letter-spacing:-0.03em;color:#F3F6FA;max-width:26ch;">Two disciplines, one way of working.</h2>
-      <p style="margin:24px 0 0;font:400 17px/1.65 'Geist',sans-serif;color:#B6BFCB;max-width:64ch;text-wrap:pretty;">I'm a mechatronics engineering student in Amman. On the engineering side I work across robotics, computer vision and embedded systems, the loop from sensor to decision to motion. On the camera side I shoot and cut commercial work for brands and creators. Both come down to the same thing: understand the system, then make every part of it deliberate.</p>
-      <p style="margin:18px 0 0;font:400 17px/1.65 'Geist',sans-serif;color:#8A93A0;max-width:64ch;text-wrap:pretty;">Outside coursework I lead student clubs and run events, the part of the work where the two tracks meet.</p>
+      <h2 style="margin:0;font:500 clamp(34px,4vw,52px)/1.06 'Space Grotesk',sans-serif;letter-spacing:-0.035em;color:#F3F6FA;max-width:14ch;">From sensor to motion.</h2>
+      <p style="margin:28px 0 0;font:400 17px/1.65 'Geist',sans-serif;color:#B6BFCB;max-width:44ch;text-wrap:pretty;">Mechatronics student at GJU, now in Koblenz. I build the full loop, sensing, firmware, control and vision, and take it onto real hardware.</p>
+      <p style="margin:16px 0 0;font:400 15px/1.6 'Geist',sans-serif;color:#5C646F;max-width:44ch;">Off the bench: video production and student leadership.</p>
     </div>
-    <div style="display:flex;flex-direction:column;gap:26px;padding-left:32px;border-left:1px solid rgba(196,141,158,0.35);">
-      <div>
-        <div style="font:500 11px/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:#5C646F;">Engineering</div>
-        <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:12px;">
-          <x-import component-from-global-scope="HasanAbuzaidPortfolioDesignSystem_4b31b8.Tag" hint-size="auto,24px">Python</x-import>
-          <x-import component-from-global-scope="HasanAbuzaidPortfolioDesignSystem_4b31b8.Tag" hint-size="auto,24px">C / C++</x-import>
-          <x-import component-from-global-scope="HasanAbuzaidPortfolioDesignSystem_4b31b8.Tag" hint-size="auto,24px">OpenCV</x-import>
-          <x-import component-from-global-scope="HasanAbuzaidPortfolioDesignSystem_4b31b8.Tag" hint-size="auto,24px">ROS</x-import>
-          <x-import component-from-global-scope="HasanAbuzaidPortfolioDesignSystem_4b31b8.Tag" hint-size="auto,24px">PLC</x-import>
-          <x-import component-from-global-scope="HasanAbuzaidPortfolioDesignSystem_4b31b8.Tag" hint-size="auto,24px">Embedded systems</x-import>
-          <x-import component-from-global-scope="HasanAbuzaidPortfolioDesignSystem_4b31b8.Tag" hint-size="auto,24px">SolidWorks</x-import>
-          <x-import component-from-global-scope="HasanAbuzaidPortfolioDesignSystem_4b31b8.Tag" hint-size="auto,24px">PCB design</x-import>
-        </div>
+    <div style="border-bottom:1px solid #232A34;">
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:baseline;padding:18px 0;border-top:1px solid #232A34;">
+        <span style="font:500 17px/1.3 'Space Grotesk',sans-serif;letter-spacing:-0.015em;color:#F3F6FA;">Vision</span>
+        <span style="font:400 14px/1.4 'Geist',sans-serif;color:#8A93A0;text-align:right;">OpenCV · YOLO · MediaPipe</span>
       </div>
-      <div>
-        <div style="font:500 11px/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:#5C646F;">Production</div>
-        <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:12px;">
-          <x-import component-from-global-scope="HasanAbuzaidPortfolioDesignSystem_4b31b8.Tag" hint-size="auto,24px">Premiere Pro</x-import>
-          <x-import component-from-global-scope="HasanAbuzaidPortfolioDesignSystem_4b31b8.Tag" hint-size="auto,24px">DaVinci Resolve</x-import>
-          <x-import component-from-global-scope="HasanAbuzaidPortfolioDesignSystem_4b31b8.Tag" hint-size="auto,24px">After Effects</x-import>
-          <x-import component-from-global-scope="HasanAbuzaidPortfolioDesignSystem_4b31b8.Tag" hint-size="auto,24px">Color grading</x-import>
-          <x-import component-from-global-scope="HasanAbuzaidPortfolioDesignSystem_4b31b8.Tag" hint-size="auto,24px">Lighting</x-import>
-          <x-import component-from-global-scope="HasanAbuzaidPortfolioDesignSystem_4b31b8.Tag" hint-size="auto,24px">Sound design</x-import>
-        </div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:baseline;padding:18px 0;border-top:1px solid #232A34;">
+        <span style="font:500 17px/1.3 'Space Grotesk',sans-serif;letter-spacing:-0.015em;color:#F3F6FA;">Embedded</span>
+        <span style="font:400 14px/1.4 'Geist',sans-serif;color:#8A93A0;text-align:right;">ESP32 · C / C++ · PCB design</span>
       </div>
-      <div>
-        <div style="font:500 11px/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:#5C646F;">Based in</div>
-        <div style="margin-top:10px;font:400 15px/1.5 'Geist',sans-serif;color:#B6BFCB;">Koblenz, Germany— available remote</div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:baseline;padding:18px 0;border-top:1px solid #232A34;">
+        <span style="font:500 17px/1.3 'Space Grotesk',sans-serif;letter-spacing:-0.015em;color:#F3F6FA;">Control &amp; automation</span>
+        <span style="font:400 14px/1.4 'Geist',sans-serif;color:#8A93A0;text-align:right;">LQR · PLC · ROS</span>
+      </div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:baseline;padding:18px 0;border-top:1px solid #232A34;">
+        <span style="font:500 17px/1.3 'Space Grotesk',sans-serif;letter-spacing:-0.015em;color:#F3F6FA;">CAD</span>
+        <span style="font:400 14px/1.4 'Geist',sans-serif;color:#8A93A0;text-align:right;">SolidWorks · AutoCAD</span>
+      </div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:baseline;padding:18px 0;border-top:1px solid #232A34;">
+        <span style="font:500 17px/1.3 'Space Grotesk',sans-serif;letter-spacing:-0.015em;color:#F3F6FA;">Based in</span>
+        <span style="font:400 14px/1.4 'Geist',sans-serif;color:#8A93A0;text-align:right;">Koblenz, Germany</span>
       </div>
     </div>
   </div>
@@ -181,7 +176,7 @@
   </div>
   <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-top:22px;flex-wrap:wrap;">
     <h2 style="margin:0;font:500 clamp(30px,3.4vw,44px)/1.12 'Space Grotesk',sans-serif;letter-spacing:-0.03em;color:#F3F6FA;max-width:24ch;">Trained on the German model.</h2>
-    <p style="margin:0;font:400 15px/1.6 'Geist',sans-serif;color:#8A93A0;max-width:36ch;">A Jordanian–German double track: mechatronics at GJU, then a year inside the German system.</p>
+    <p style="margin:0;font:400 15px/1.6 'Geist',sans-serif;color:#8A93A0;max-width:36ch;">Mechatronics at GJU, with a year in Germany.</p>
   </div>
   <div data-m="stack" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:48px;">
     <div style="display:flex;flex-direction:column;gap:16px;padding:28px;background:#151A21;border:1px solid #232A34;border-radius:8px;transition:border-color 320ms cubic-bezier(0.22,1,0.36,1),transform 320ms cubic-bezier(0.22,1,0.36,1),box-shadow 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="border-color:#8FA68E;transform:translateY(-3px);box-shadow:0 0 0 1px rgba(143,166,142,0.22), 0 18px 40px -22px rgba(143,166,142,0.35);">
@@ -193,11 +188,11 @@
         <h3 style="margin:0;font:500 26px/1.15 'Space Grotesk',sans-serif;letter-spacing:-0.025em;color:#F3F6FA;">German Jordanian University</h3>
         <div style="margin-top:8px;font:400 16px/1.5 'Geist',sans-serif;color:#B6BFCB;">BSc Mechatronics Engineering</div>
       </div>
-      <p style="margin:0;font:400 14px/1.6 'Geist',sans-serif;color:#8A93A0;text-wrap:pretty;">Control systems, robotics, embedded design and machine vision, taught on the German applied-sciences curriculum, with a mandatory year abroad built into the degree.</p>
+      <p style="margin:0;font:400 14px/1.6 'Geist',sans-serif;color:#8A93A0;text-wrap:pretty;">Control, robotics, embedded design and machine vision.</p>
       <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:2px;">
-        <x-import component-from-global-scope="HasanAbuzaidPortfolioDesignSystem_4b31b8.Tag" hint-size="auto,24px">Control systems</x-import>
-        <x-import component-from-global-scope="HasanAbuzaidPortfolioDesignSystem_4b31b8.Tag" hint-size="auto,24px">Robotics</x-import>
-        <x-import component-from-global-scope="HasanAbuzaidPortfolioDesignSystem_4b31b8.Tag" hint-size="auto,24px">Machine vision</x-import>
+        <span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:999px;border:1px solid #2A323C;background:#12161C;font:500 12px/1.4 'Geist',sans-serif;letter-spacing:0.01em;color:#B6BFCB;white-space:nowrap;">Control systems</span>
+        <span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:999px;border:1px solid #2A323C;background:#12161C;font:500 12px/1.4 'Geist',sans-serif;letter-spacing:0.01em;color:#B6BFCB;white-space:nowrap;">Robotics</span>
+        <span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:999px;border:1px solid #2A323C;background:#12161C;font:500 12px/1.4 'Geist',sans-serif;letter-spacing:0.01em;color:#B6BFCB;white-space:nowrap;">Machine vision</span>
       </div>
     </div>
     <div style="display:flex;flex-direction:column;gap:16px;padding:28px;background:#151A21;border:1px solid #232A34;border-radius:8px;transition:border-color 320ms cubic-bezier(0.22,1,0.36,1),transform 320ms cubic-bezier(0.22,1,0.36,1),box-shadow 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="border-color:#8FA68E;transform:translateY(-3px);box-shadow:0 0 0 1px rgba(143,166,142,0.22), 0 18px 40px -22px rgba(143,166,142,0.35);">
@@ -209,10 +204,10 @@
         <h3 style="margin:0;font:500 26px/1.15 'Space Grotesk',sans-serif;letter-spacing:-0.025em;color:#F3F6FA;">Hochschule Koblenz</h3>
         <div style="margin-top:8px;font:400 16px/1.5 'Geist',sans-serif;color:#B6BFCB;">Study &amp; internship year — mechatronics</div>
       </div>
-      <p style="margin:0;font:400 14px/1.6 'Geist',sans-serif;color:#8A93A0;text-wrap:pretty;">Coursework and practical work in a German engineering faculty, German-language technical environment, lab-based assessment, and industry practice standards.</p>
+      <p style="margin:0;font:400 14px/1.6 'Geist',sans-serif;color:#8A93A0;text-wrap:pretty;">Engineering coursework and lab work, in German.</p>
       <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:2px;">
-        <x-import component-from-global-scope="HasanAbuzaidPortfolioDesignSystem_4b31b8.Tag" hint-size="auto,24px">German language</x-import>
-        <x-import component-from-global-scope="HasanAbuzaidPortfolioDesignSystem_4b31b8.Tag" hint-size="auto,24px">Lab practice</x-import>
+        <span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:999px;border:1px solid #2A323C;background:#12161C;font:500 12px/1.4 'Geist',sans-serif;letter-spacing:0.01em;color:#B6BFCB;white-space:nowrap;">German language</span>
+        <span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:999px;border:1px solid #2A323C;background:#12161C;font:500 12px/1.4 'Geist',sans-serif;letter-spacing:0.01em;color:#B6BFCB;white-space:nowrap;">Lab practice</span>
       </div>
     </div>
   </div>
@@ -260,7 +255,7 @@
           <span style="font:400 15px/1.4 'Geist',sans-serif;color:#C4A47D;">Nexus Nature</span>
           <a href="https://drive.google.com/file/d/1q5Ps1jL_jK2EMStD5X0549K5ttPt4JWG/view?usp=sharing" target="_blank" rel="noreferrer" style="font:500 13px/1.4 'Geist',sans-serif;color:#B6BFCB;text-decoration:none;border-bottom:1px solid #2A323C;transition:color 320ms cubic-bezier(0.22,1,0.36,1),border-color 320ms;" style-hover="color:#D9BF9C;border-color:#C4A47D;">Certificate of experience ↗</a>
         </div>
-        <p style="margin:10px 0 0;font:400 15px/1.6 'Geist',sans-serif;color:#8A93A0;max-width:70ch;text-wrap:pretty;">One line on what you owned, the system, the stack, and the outcome that mattered.</p>
+        <p style="margin:10px 0 0;font:400 15px/1.6 'Geist',sans-serif;color:#8A93A0;max-width:70ch;text-wrap:pretty;">Sensing firmware, sensor PCB and custom parts for a live hydroponic system.</p>
       </div>
     </div>
 
@@ -271,7 +266,7 @@
           <h3 style="margin:0;font:500 21px/1.25 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;">Automation Trainee</h3>
           <span style="font:400 15px/1.4 'Geist',sans-serif;color:#C4A47D;">Altaqadum Modern</span>
         </div>
-        <p style="margin:10px 0 0;font:400 15px/1.6 'Geist',sans-serif;color:#8A93A0;max-width:70ch;text-wrap:pretty;">Hands-on with PLC programming, sensors and machine wiring on live production lines.</p>
+        <p style="margin:10px 0 0;font:400 15px/1.6 'Geist',sans-serif;color:#8A93A0;max-width:70ch;text-wrap:pretty;">PLC programming and machine wiring on live production lines.</p>
       </div>
     </div>
 
@@ -282,7 +277,7 @@
           <h3 style="margin:0;font:500 21px/1.25 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;">Freelance Videographer &amp; Editor</h3>
           <span style="font:400 15px/1.4 'Geist',sans-serif;color:#C4A47D;">Commercial &amp; creator work</span>
         </div>
-        <p style="margin:10px 0 0;font:400 15px/1.6 'Geist',sans-serif;color:#8A93A0;max-width:70ch;text-wrap:pretty;">Shot, edited and graded commercial spots and social campaigns for brands and creators, concept to delivery.</p>
+        <p style="margin:10px 0 0;font:400 15px/1.6 'Geist',sans-serif;color:#8A93A0;max-width:70ch;text-wrap:pretty;">Shoot and edit for brands and creators.</p>
       </div>
     </div>
 
@@ -299,7 +294,7 @@
   </div>
   <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-top:22px;flex-wrap:wrap;">
     <h2 style="margin:0;font:500 clamp(30px,3.4vw,44px)/1.12 'Space Grotesk',sans-serif;letter-spacing:-0.03em;color:#F3F6FA;max-width:24ch;">Systems that sense, decide and move.</h2>
-    <p style="margin:0;font:400 15px/1.6 'Geist',sans-serif;color:#8A93A0;max-width:36ch;">Nine projects, vision, embedded, control, PCB and CAD. Source on GitHub where the repo is public.</p>
+    <p style="margin:0;font:400 15px/1.6 'Geist',sans-serif;color:#8A93A0;max-width:36ch;">Vision, embedded, control and PCB.</p>
   </div>
 
   <div style="display:flex;flex-wrap:wrap;gap:9px;margin-top:36px;">
@@ -401,15 +396,14 @@
     <span style="font:500 12px/1 'Geist',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#C48D7D;">05 — Videography</span>
   </div>
     <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-top:22px;flex-wrap:wrap;">
-      <h2 style="margin:0;font:500 clamp(30px,3.4vw,44px)/1.12 'Space Grotesk',sans-serif;letter-spacing:-0.03em;color:#F3F6FA;max-width:22ch;">Engineering precision, shot like cinema.</h2>
-      <p style="margin:0;font:400 15px/1.6 'Geist',sans-serif;color:#8A93A0;max-width:36ch;">Commercial spots and social campaigns, concept, shoot, edit, color.</p>
+      <h2 style="margin:0;font:500 clamp(30px,3.4vw,44px)/1.12 'Space Grotesk',sans-serif;letter-spacing:-0.03em;color:#F3F6FA;max-width:22ch;">Also behind the camera.</h2>
+      <p style="margin:0;font:400 15px/1.6 'Geist',sans-serif;color:#8A93A0;max-width:36ch;">Shoot, edit, color.</p>
     </div>
 
 
     <div style="margin-top:56px;padding-top:36px;border-top:1px solid #232A34;">
       <div style="display:flex;justify-content:space-between;align-items:baseline;gap:24px;flex-wrap:wrap;">
         <h3 style="margin:0;font:500 22px/1.2 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;">Selected reels</h3>
-        <p style="margin:0;font:400 14px/1.6 'Geist',sans-serif;color:#8A93A0;max-width:40ch;">Five vertical edits, shot and cut end to end. Play to watch in place.</p>
       </div>
       <div data-m="reels" style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:24px;">
         <sc-for list="{{ reels }}" as="r" hint-placeholder-count="5">
@@ -426,7 +420,7 @@
       </div>
       <div style="display:flex;align-items:flex-start;gap:20px;margin-top:32px;padding:22px 24px;border:1px solid #2A323C;border-radius:8px;background:rgba(196,141,125,0.045);flex-wrap:wrap;">
         <span style="font:500 11px/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:#C48D7D;padding-top:3px;white-space:nowrap;">Own kit</span>
-        <p style="margin:0;font:400 15px/1.6 'Geist',sans-serif;color:#B6BFCB;max-width:62ch;text-wrap:pretty;">I shoot on my own Sony A7 III with a set of lenses, and I bring the kit to the shoot — no rental dependency, no waiting on gear to book a day.</p>
+        <p style="margin:0;font:400 15px/1.6 'Geist',sans-serif;color:#B6BFCB;max-width:62ch;text-wrap:pretty;">Own Sony A7 III and lenses.</p>
       </div>
     </div>
   </div>
@@ -441,21 +435,21 @@
   </div>
   <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-top:22px;flex-wrap:wrap;">
     <h2 style="margin:0;font:500 clamp(30px,3.4vw,44px)/1.12 'Space Grotesk',sans-serif;letter-spacing:-0.03em;color:#F3F6FA;max-width:24ch;">Clubs, events, and the people behind them.</h2>
-    <p style="margin:0;font:400 15px/1.6 'Geist',sans-serif;color:#8A93A0;max-width:36ch;">Student leadership and volunteering, organising the rooms where the work gets shown.</p>
+    <p style="margin:0;font:400 15px/1.6 'Geist',sans-serif;color:#8A93A0;max-width:36ch;">Student clubs and events.</p>
   </div>
 
   <div data-m="stack" style="display:grid;grid-template-columns:repeat(2,minmax(0,380px));gap:20px;margin-top:48px;justify-content:center;">
-    <x-import component-from-global-scope="HasanAbuzaidPortfolioDesignSystem_4b31b8.Card" padding="{{ 26 }}" hint-size="100%,190px">
+    <div style="background:#151A21;border:1px solid #232A34;border-radius:8px;padding:26px;transition:border-color 320ms cubic-bezier(0.22,1,0.36,1),box-shadow 320ms,transform 320ms;" style-hover="border-color:#9D93C4;transform:translateY(-3px);box-shadow:0 0 0 1px rgba(157,147,196,0.25), 0 18px 40px -20px rgba(157,147,196,0.4);">
       <div style="font:500 11px/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:#9D93C4;">2024 — present</div>
       <div style="margin-top:14px;font:500 22px/1.2 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;">President</div>
       <div style="margin-top:6px;font:400 15px/1.4 'Geist',sans-serif;color:#B6BFCB;">Innovation Club</div>
-      <p style="margin:14px 0 0;font:400 14px/1.6 'Geist',sans-serif;color:#8A93A0;">Ran the committee, the calendar and the budget — and grew the member base to 1500+</p>
-    </x-import><x-import component-from-global-scope="HasanAbuzaidPortfolioDesignSystem_4b31b8.Card" padding="{{ 26 }}" hint-size="100%,190px">
+      <p style="margin:14px 0 0;font:400 14px/1.6 'Geist',sans-serif;color:#8A93A0;">Grew the club to 1,500+ members.</p>
+    </div><div style="background:#151A21;border:1px solid #232A34;border-radius:8px;padding:26px;transition:border-color 320ms cubic-bezier(0.22,1,0.36,1),box-shadow 320ms,transform 320ms;" style-hover="border-color:#9D93C4;transform:translateY(-3px);box-shadow:0 0 0 1px rgba(157,147,196,0.25), 0 18px 40px -20px rgba(157,147,196,0.4);">
       <div style="font:500 11px/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:#9D93C4;">2025 — PRESENT</div>
       <div style="margin-top:14px;font:500 22px/1.2 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;">Co-Chair</div>
       <div style="margin-top:6px;font:400 15px/1.4 'Geist',sans-serif;color:#B6BFCB;">AAAI Jordan Chapter</div>
-      <p style="margin:14px 0 0;font:400 14px/1.6 'Geist',sans-serif;color:#8A93A0;">Planned and ran technical workshops and competitions end to end, from speakers to logistics.</p>
-    </x-import>
+      <p style="margin:14px 0 0;font:400 14px/1.6 'Geist',sans-serif;color:#8A93A0;">Ran technical workshops and competitions.</p>
+    </div>
   </div>
 
   <div data-m="stack" style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:20px;">
@@ -490,7 +484,6 @@
     </div>
     <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-top:22px;flex-wrap:wrap;">
       <h2 style="margin:0;font:500 clamp(30px,3.4vw,44px)/1.12 'Space Grotesk',sans-serif;letter-spacing:-0.03em;color:#F3F6FA;max-width:22ch;">Selected and placed.</h2>
-      <p style="margin:0;font:400 15px/1.6 'Geist',sans-serif;color:#8A93A0;max-width:36ch;">Competitive selection, judged against a field.</p>
     </div>
     <div data-m="stack" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:48px;">
       <div style="display:flex;flex-direction:column;background:#151A21;border:1px solid #232A34;border-radius:8px;overflow:hidden;transition:border-color 320ms cubic-bezier(0.22,1,0.36,1),transform 320ms cubic-bezier(0.22,1,0.36,1),box-shadow 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="border-color:#8FA68E;transform:translateY(-3px);box-shadow:0 0 0 1px rgba(143,166,142,0.25), 0 18px 40px -20px rgba(143,166,142,0.35);">
@@ -500,7 +493,7 @@
         <div style="display:flex;flex-direction:column;padding:26px;">
           <div style="font:500 11px/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:#8FA68E;">Top 5 nationally</div>
           <h3 style="margin:14px 0 0;font:500 22px/1.25 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;text-wrap:pretty;">National FinTech Hackathon</h3>
-          <p style="margin:12px 0 0;font:400 14px/1.65 'Geist',sans-serif;color:#8A93A0;text-wrap:pretty;">Placed in the top five of a national field — concept, build and pitch inside the competition window.</p>
+          <p style="margin:12px 0 0;font:400 14px/1.65 'Geist',sans-serif;color:#8A93A0;text-wrap:pretty;">Concept, build and pitch.</p>
         </div>
       </div>
       <div style="display:flex;flex-direction:column;background:#151A21;border:1px solid #232A34;border-radius:8px;overflow:hidden;transition:border-color 320ms cubic-bezier(0.22,1,0.36,1),transform 320ms cubic-bezier(0.22,1,0.36,1),box-shadow 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="border-color:#8FA68E;transform:translateY(-3px);box-shadow:0 0 0 1px rgba(143,166,142,0.25), 0 18px 40px -20px rgba(143,166,142,0.35);">
@@ -510,7 +503,7 @@
         <div style="display:flex;flex-direction:column;padding:26px;">
           <div style="font:500 11px/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:#8FA68E;">DAAD funded</div>
           <h3 style="margin:14px 0 0;font:500 22px/1.25 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;text-wrap:pretty;">Selected — University of Duisburg-Essen</h3>
-          <p style="margin:12px 0 0;font:400 14px/1.65 'Geist',sans-serif;color:#8A93A0;text-wrap:pretty;">Chosen for a DAAD-funded project at the University of Duisburg-Essen, working in a German research setting.</p>
+          <p style="margin:12px 0 0;font:400 14px/1.65 'Geist',sans-serif;color:#8A93A0;text-wrap:pretty;">DAAD-funded research project.</p>
         </div>
       </div>
     </div>
@@ -528,7 +521,7 @@
   </div>
     <h2 style="margin:22px 0 0;font:500 clamp(36px,4.6vw,60px)/1.06 'Space Grotesk',sans-serif;letter-spacing:-0.035em;color:#F3F6FA;max-width:20ch;">Let's build something worth shooting.</h2>
     <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:24px;">
-      <p style="margin:0;font:400 17px/1.65 'Geist',sans-serif;color:#B6BFCB;max-width:52ch;">Open to engineering internships, freelance production work, and collaborations.</p>
+      <p style="margin:0;font:400 17px/1.65 'Geist',sans-serif;color:#B6BFCB;max-width:52ch;">Open to engineering internships and roles.</p>
     </div>
     <div data-m="stack contact" style="position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:56px;border-top:1px solid #232A34;">
       <a href="mailto:hasan.abuzaid04@gmail.com" style="display:flex;flex-direction:column;gap:8px;padding:24px 24px 24px 0;text-decoration:none;border-right:1px solid #232A34;transition:background 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="background:rgba(125,168,196,0.06);">
@@ -575,7 +568,7 @@
   <div aria-hidden="true" style="height:2px;background:linear-gradient(90deg,#7DA8C4,#C48D9E,#8FA68E,#C4A47D,#7DBFC4,#C48D7D,#9D93C4);opacity:0.5;"></div>
   <div data-m="fwrap" style="max-width:1200px;margin:0 auto;padding:32px 48px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;">
     <div style="font:600 17px/1 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#B6BFCB;">Hasan<span style="color:#7DA8C4;">.</span></div>
-    <div style="font:400 13px/1.4 'Geist',sans-serif;color:#5C646F;">Mechatronics engineering · Videography — Amman, Jordan</div>
+    <div style="font:400 13px/1.4 'Geist',sans-serif;color:#5C646F;">Mechatronics engineering — Koblenz, Germany</div>
   </div>
 </footer></x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;projectLayout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;cards&quot;,&quot;rows&quot;],&quot;default&quot;:&quot;cards&quot;,&quot;tsType&quot;:&quot;'cards' | 'rows'&quot;,&quot;section&quot;:&quot;Work grid&quot;},&quot;showAccomplishments&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;}}">
@@ -927,8 +920,8 @@ class Component extends DCLogic {
         title: 'Hydroponic Sensor Node PCB',
         cat: 'Hardware',
         kicker: 'KiCad → JLCPCB',
-        short: 'A consolidated four-sensor board — ESP32 carrier, ADS1115 ADC, analog front-ends for TDS/EC and pH, ultrasonic interface — designed in KiCad and fabricated at JLCPCB.',
-        long: 'Schematic capture, layout, DRC, gerber export and a real fab house: the constraints that only appear when a board is actually manufactured. Analog front-ends make it harder than a digital-only layout — grounding, routing away from switching noise and reference stability decide whether the calibration survives the move off the breadboard.',
+        short: 'Four-sensor ESP32 board, designed in KiCad and fabricated at JLCPCB.',
+        long: 'Analog front-ends for TDS/EC and pH, routed to keep calibration stable off the breadboard.',
         tags: ['KiCad', 'PCB layout', 'Analog front-end'],
         href: 'https://github.com/hasan-abuzaid/PCB-nft-1', action: 'View on GitHub'
       },
@@ -936,8 +929,8 @@ class Component extends DCLogic {
         title: 'Gesture-Based Access Control',
         cat: 'Vision',
         kicker: 'Graduation project',
-        short: 'Hand gestures read by MediaPipe on a Raspberry Pi 400 drive a Delta PLC and NI myRIO to actuate industrial access hardware.',
-        long: 'The full stack in one artifact: vision model → embedded compute → industrial controller → physical action. PLC-plus-vision integration is the actual shape of factory automation work, and the repo is public.',
+        short: 'MediaPipe gestures on a Raspberry Pi drive a Delta PLC to actuate access hardware.',
+        long: 'Vision → embedded compute → PLC → physical action.',
         tags: ['MediaPipe', 'Delta PLC', 'NI myRIO', 'Raspberry Pi'],
         href: 'https://github.com/hasan-abuzaid/gesture-access-control-system', action: 'View on GitHub'
       },
@@ -945,8 +938,8 @@ class Component extends DCLogic {
         title: 'Ball-on-Plate LQR Balancing',
         cat: 'Control',
         kicker: 'Closed-loop control',
-        short: 'OpenCV position tracking feeding an LQR controller on an Arduino Mega to keep a ball centred on a tilting plate.',
-        long: 'LQR over PID by choice — state-space thinking rather than tuning knobs until the oscillation stops. The interesting parts are the specific tuning decisions and the vision-latency compensation.',
+        short: 'OpenCV tracking feeds an LQR controller that keeps a ball centred on a tilting plate.',
+        long: 'State-space control with vision-latency compensation.',
         tags: ['OpenCV', 'LQR', 'Arduino Mega'],
         href: 'https://github.com/hasan-abuzaid/ball-on-plate-project', action: 'View on GitHub'
       },
@@ -954,8 +947,8 @@ class Component extends DCLogic {
         title: 'Hydroponic Sensing & Control Firmware',
         cat: 'Embedded',
         kicker: 'Nexus Nature — in production',
-        short: 'ESP32 node reading TDS/EC and pH through an ADS1115 ADC plus JSN-SR20 ultrasonic level sensing, published over MQTT into Home Assistant via ESPHome.',
-        long: 'The engineering substance is calibration, not wiring: a ×0.4374 correction factor derived for the TDS reading and a two-point pH calibration, because analog water-chemistry sensors are worthless out of the box. It runs a live system — someone else depends on the numbers being right.',
+        short: 'ESP32 node for TDS/EC, pH and water level, reporting to Home Assistant over MQTT.',
+        long: 'Custom TDS correction and two-point pH calibration. Runs in production.',
         tags: ['ESP32', 'ESPHome', 'MQTT', 'ADS1115'],
         href: 'https://github.com/hasan-abuzaid/nft-hydroponic-controller', action: 'View on GitHub'
       },
@@ -963,8 +956,8 @@ class Component extends DCLogic {
         title: 'YOLOv11 PCB Defect Detection',
         cat: 'Vision',
         kicker: '83.4% mAP@0.5',
-        short: 'Object-detection model trained on the DSPCBSD dataset to catch manufacturing defects on printed circuit boards — 83.4% mAP@0.5, 81% precision, 78% recall.',
-        long: 'Applied inspection engineering rather than research: a benchmark dataset with a published baseline, so the number demonstrates command of the training pipeline. Maps directly onto industrial machine-vision QA.',
+        short: 'Detects PCB manufacturing defects — 83.4% mAP@0.5.',
+        long: 'Trained on DSPCBSD. 81% precision, 78% recall.',
         tags: ['YOLOv11', 'PyTorch', 'Machine vision'],
         href: 'https://github.com/hasan-abuzaid/pcb-defect-detection', action: 'View on GitHub'
       },
@@ -972,7 +965,7 @@ class Component extends DCLogic {
         title: 'FieldIQ — Football Scouting Analytics',
         cat: 'Vision',
         kicker: 'Third place, scouting hackathon',
-        short: 'Player tracking and identification for football scouting: YOLOv8 detection, ByteTrack multi-object tracking and ArcFace re-identification, deployed on a Jetson Orin Nano.',
+        short: 'Player tracking and re-identification on a Jetson Orin Nano.',
         long: 'The architecture is the asset — multi-object tracking with re-ID on constrained edge compute is a genuinely hard problem. The venture itself is parked; the pipeline carries forward.',
         tags: ['YOLOv8', 'ByteTrack', 'ArcFace', 'Jetson Orin'],
         href: null, action: 'Repo not public'
@@ -981,7 +974,7 @@ class Component extends DCLogic {
         title: 'NFT Pipe Interface Component',
         cat: 'Hardware',
         kicker: 'AutoCAD → 3D print',
-        short: 'A custom part modelled in AutoCAD and 3D printed to fix a pipe-interfacing failure in the NFT hydroponic system at Nexus Nature.',
+        short: 'Custom 3D-printed part fixing a pipe failure in a live hydroponic system.',
         long: 'No off-the-shelf fitting existed at the right geometry, so the choice was compromising the channel design or making the part. The full mechanical loop — identify the failure, model to existing hardware, print, install, verify under continuous flow — inside a system that is actually running.',
         tags: ['AutoCAD', '3D printing', 'Mechanical design'],
         href: null, action: 'Repo not public'
@@ -990,7 +983,7 @@ class Component extends DCLogic {
         title: 'PLC Sorting Line',
         cat: 'Control',
         kicker: 'Industrial automation',
-        short: 'Delta PLC ladder logic for a conveyor sorter — sensor debouncing, pneumatic actuation and HMI screens.',
+        short: 'Delta PLC logic and HMI for a conveyor sorter.',
         long: 'Built against real automation constraints: signal noise on the sensors, actuator timing, and an operator-facing HMI rather than a serial monitor.',
         tags: ['Delta PLC', 'Ladder logic', 'HMI'],
         href: null, action: 'Repo not public'
@@ -999,7 +992,7 @@ class Component extends DCLogic {
         title: 'Dukkan — Shop Management',
         cat: 'Apps',
         kicker: 'Built for one real user',
-        short: 'A lightweight inventory and shop management tool that syncs to Google Sheets as its backend.',
+        short: 'Inventory tool for a shop owner, backed by Google Sheets.',
         long: 'Not the hardest engineering here, and it earns its slot for a different reason: it was built for a non-technical owner\'s daily workflow, and it skips a database because a spreadsheet they already understand does the job.',
         tags: ['Google Sheets API', 'App', 'Pragmatism'],
         href: 'https://github.com/hasan-abuzaid/dukkan-manager', action: 'View on GitHub'
