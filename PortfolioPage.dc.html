@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap">
+<script src="./ds-base.js"></script>
+<script src="./de.js"></script>
+<script src="./image-slot.js"></script>
+<style>
+  *{box-sizing:border-box;}
+  body{margin:0;background:#0A0C10;color:#E7EBF0;font-family:'Geist',ui-sans-serif,sans-serif;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;transition:color 240ms cubic-bezier(0.22,1,0.36,1),opacity 240ms cubic-bezier(0.22,1,0.36,1);}
+  a:hover{opacity:0.82;}
+  html{scroll-behavior:smooth;}
+  [data-reveal]{opacity:0;transform:translateY(18px);filter:blur(6px);transition:opacity 760ms cubic-bezier(0.22,1,0.36,1),transform 760ms cubic-bezier(0.22,1,0.36,1),filter 760ms cubic-bezier(0.22,1,0.36,1);will-change:opacity,transform;}
+  [data-reveal="in"]{opacity:1;transform:none;filter:none;}
+  [data-word]{display:inline-block;opacity:0;transform:translateY(0.5em) rotate(1.5deg);transition:opacity 620ms cubic-bezier(0.22,1,0.36,1),transform 700ms cubic-bezier(0.22,1,0.36,1);}
+  [data-word="in"]{opacity:1;transform:none;}
+  @media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1;transform:none;}}
+  img{transition:filter 520ms cubic-bezier(0.22,1,0.36,1);}
+  @keyframes grainShift{0%{transform:translate3d(0,0,0);}25%{transform:translate3d(-3%,2%,0);}50%{transform:translate3d(2%,-2%,0);}75%{transform:translate3d(-2%,-3%,0);}100%{transform:translate3d(0,0,0);}}
+  @keyframes auroraDrift{from{transform:translate3d(0,0,0) scale(1);}to{transform:translate3d(2.5%,-2%,0) scale(1.08);}}
+  [data-rule]{transform:scaleX(0);transform-origin:left center;transition:transform 780ms cubic-bezier(0.22,1,0.36,1) 140ms;}
+  [data-reveal="in"] [data-rule]{transform:scaleX(1);}
+  [data-reel] image-slot{display:block;transition:transform 1100ms cubic-bezier(0.22,1,0.36,1);}
+  [data-reel]:hover image-slot{transform:scale(1.07);}
+  @media (max-width:760px){
+    [data-m~="wrap"]{padding:72px 20px !important;}
+    [data-m~="wrap"][data-m~="stack"]{padding:48px 20px 64px !important;gap:36px !important;}
+    [data-m~="hwrap"]{padding:0 14px !important;gap:10px !important;}
+    [data-m~="fwrap"]{padding:28px 20px 96px !important;}
+    [data-m~="stack"]{grid-template-columns:minmax(0,1fr) !important;gap:16px !important;}
+    [data-m~="xp"]{gap:8px !important;padding:22px 12px !important;}
+    [data-m~="lang"]{gap:0 !important;}
+    [data-m~="lang"] > *{border-right:0 !important;border-bottom:1px solid rgba(143,166,142,0.2);}
+    [data-m~="lang"] > *:last-child{border-bottom:0;}
+    [data-m~="contact"]{gap:0 !important;}
+    [data-m~="contact"] > *{padding:20px 0 !important;border-right:0 !important;border-bottom:1px solid #232A34;}
+    [data-m~="row"]{grid-template-columns:32px minmax(0,1fr) !important;gap:6px 14px !important;padding:18px 4px !important;}
+    [data-m~="row"] > :nth-child(n+3){grid-column:2;}
+    [data-m~="reels"]{grid-template-columns:none !important;grid-auto-flow:column;grid-auto-columns:64%;overflow-x:auto;scroll-snap-type:x mandatory;margin-left:-20px;margin-right:-20px;padding:0 20px 6px;scrollbar-width:none;}
+    [data-m~="reels"]::-webkit-scrollbar{display:none;}
+    [data-m~="reels"] > *{scroll-snap-align:start;}
+    [data-m~="hnav"]{flex:1 1 auto !important;overflow-x:auto;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 10px,#000 calc(100% - 18px),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 10px,#000 calc(100% - 18px),transparent 100%);}
+    [data-m~="hnav"]::-webkit-scrollbar{display:none;}
+    [data-m~="hnav"] button{padding:9px 10px !important;}
+    [data-m~="rail"]{display:none !important;}
+    [data-m~="dock"]{left:14px !important;right:14px !important;bottom:14px !important;}
+    [data-m~="dock"] > a{flex:1 1 0;justify-content:center;padding:14px 12px !important;}
+    [data-m~="lb"]{padding:14px !important;}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none !important;}[data-rule]{transform:none !important;}[data-reel]:hover image-slot{transform:none;}}
+</style>
+</helmet>
+
+<div style="position:fixed;top:0;left:0;right:0;height:2px;z-index:60;pointer-events:none;">
+  <div style="height:100%;width:{{ progressPct }};background:{{ liveHue }};box-shadow:0 0 14px {{ liveGlow }};transition:width 120ms linear,background 420ms cubic-bezier(0.22,1,0.36,1);"></div>
+</div>
+
+<nav data-m="rail" aria-label="Sections" style="position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:65;display:flex;flex-direction:column;gap:14px;align-items:flex-end;pointer-events:none;">
+  <sc-for list="{{ chapters }}" as="ch" hint-placeholder-count="8">
+    <button type="button" onClick="{{ ch.go }}" title="{{ ch.label }}" style="display:flex;align-items:center;gap:10px;padding:0;background:none;border:0;cursor:pointer;pointer-events:auto;width:fit-content;">
+      <span style="font:500 10px/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;white-space:nowrap;overflow:hidden;pointer-events:none;max-width:{{ ch.labelWidth }};opacity:{{ ch.labelOpacity }};color:{{ ch.hue }};transition:opacity 320ms cubic-bezier(0.22,1,0.36,1),max-width 320ms cubic-bezier(0.22,1,0.36,1);">{{ ch.label }}</span>
+      <span style="display:block;height:{{ ch.dotH }};width:2px;border-radius:2px;background:{{ ch.dotBg }};transition:height 320ms cubic-bezier(0.22,1,0.36,1),background 320ms cubic-bezier(0.22,1,0.36,1);"></span>
+    </button>
+  </sc-for>
+</nav>
+
+<div data-m="dock" style="position:fixed;right:28px;bottom:28px;z-index:70;display:flex;gap:10px;opacity:{{ dockOpacity }};transform:translate3d(0,{{ dockShift }},0);transition:opacity 420ms cubic-bezier(0.22,1,0.36,1),transform 420ms cubic-bezier(0.22,1,0.36,1);pointer-events:{{ dockPointer }};">
+  <a href="https://drive.google.com/file/d/1qOxDuRTNwKpw93RjWQCeSmDdZRd1dQSW/view?usp=sharing" target="_blank" rel="noreferrer" style="display:inline-flex;align-items:center;gap:8px;padding:13px 20px;border-radius:6px;background:rgba(14,17,22,0.86);backdrop-filter:blur(12px) saturate(1.4);border:1px solid #2A323C;color:#E7EBF0;font:500 14px/1 'Geist',sans-serif;text-decoration:none;transition:border-color 320ms cubic-bezier(0.22,1,0.36,1),box-shadow 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="border-color:rgba(125,168,196,0.7);box-shadow:0 0 0 1px rgba(125,168,196,0.25), 0 16px 40px -20px rgba(125,168,196,0.55);">Download CV</a>
+  <a href="mailto:hasan.abuzaid04@gmail.com" style="display:inline-flex;align-items:center;gap:8px;padding:13px 20px;border-radius:6px;background:rgba(125,168,196,0.16);backdrop-filter:blur(12px) saturate(1.4);border:1px solid rgba(125,168,196,0.5);color:#9DC2D9;font:500 14px/1 'Geist',sans-serif;text-decoration:none;transition:background 320ms cubic-bezier(0.22,1,0.36,1),box-shadow 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="background:rgba(125,168,196,0.26);box-shadow:0 16px 40px -20px rgba(125,168,196,0.6);">Get in touch</a>
+</div>
+
+<header style="position:fixed;top:0;left:0;right:0;z-index:64;height:68px;display:flex;align-items:center;background:{{ navBg }};backdrop-filter:{{ navBlur }};border-bottom:1px solid {{ navBorder }};transition:background 420ms cubic-bezier(0.22,1,0.36,1),border-color 520ms cubic-bezier(0.22,1,0.36,1),backdrop-filter 420ms cubic-bezier(0.22,1,0.36,1);">
+  <div data-m="hwrap" style="width:100%;max-width:1200px;margin:0 auto;padding:0 48px;display:flex;align-items:center;justify-content:space-between;gap:20px;min-width:0;">
+    <a href="#home" onClick="{{ goHome }}" style="flex:none;display:flex;align-items:baseline;gap:2px;text-decoration:none;font:600 19px/1 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;">
+      <span style="flex:none;">Hasan</span><span style="flex:none;width:5px;height:5px;border-radius:999px;background:{{ liveHue }};box-shadow:0 0 10px {{ liveGlow }};transition:background 520ms cubic-bezier(0.22,1,0.36,1),box-shadow 520ms cubic-bezier(0.22,1,0.36,1);"></span>
+    </a>
+    <nav data-m="hnav" style="flex:0 1 auto;min-width:0;display:flex;align-items:center;gap:2px;">
+      <sc-for list="{{ navItems }}" as="ch" hint-placeholder-count="5">
+        <button type="button" onClick="{{ ch.go }}" style="position:relative;flex:none;white-space:nowrap;padding:9px 14px;border:0;border-radius:6px;background:{{ ch.navBg }};cursor:pointer;font:500 12.5px/1 'Geist',sans-serif;color:{{ ch.navColor }};transition:color 320ms cubic-bezier(0.22,1,0.36,1),background 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="color:#E7EBF0;background:rgba(255,255,255,0.045);">
+          {{ ch.label }}
+          <span aria-hidden="true" style="position:absolute;left:14px;right:14px;bottom:4px;height:1px;border-radius:1px;background:{{ ch.hue }};opacity:{{ ch.underline }};transition:opacity 320ms cubic-bezier(0.22,1,0.36,1);"></span>
+        </button>
+      </sc-for>
+    </nav>
+    <div style="flex:none;display:flex;align-items:center;gap:2px;padding:3px;border-radius:999px;border:1px solid #232A34;background:rgba(255,255,255,0.02);">
+      <button type="button" onClick="{{ setEN }}" style="padding:6px 12px;border:0;border-radius:999px;cursor:pointer;font:500 11px/1 'Geist',sans-serif;letter-spacing:0.1em;background:{{ enBg }};color:{{ enColor }};transition:background 320ms cubic-bezier(0.22,1,0.36,1),color 320ms cubic-bezier(0.22,1,0.36,1);">EN</button>
+      <button type="button" onClick="{{ setDE }}" style="padding:6px 12px;border:0;border-radius:999px;cursor:pointer;font:500 11px/1 'Geist',sans-serif;letter-spacing:0.1em;background:{{ deBg }};color:{{ deColor }};transition:background 320ms cubic-bezier(0.22,1,0.36,1),color 320ms cubic-bezier(0.22,1,0.36,1);">DE</button>
+    </div>
+  </div>
+</header>
+
+<div style="height:68px;"></div>
+
+<section id="home" data-screen-label="Hero" style="position:relative;overflow:hidden;border-bottom:1px solid #232A34;">
+  <div style="position:absolute;inset:0;background:radial-gradient(60% 50% at 72% 18%, rgba(125,168,196,0.16) 0%, rgba(125,168,196,0) 70%), radial-gradient(50% 40% at 12% 88%, rgba(143,166,142,0.08) 0%, rgba(143,166,142,0) 70%);animation:auroraDrift 26s cubic-bezier(0.4,0,0.6,1) infinite alternate;" aria-hidden="true"></div>
+  <div data-m="wrap stack" style="position:relative;max-width:1200px;margin:0 auto;padding:104px 48px 88px;display:grid;grid-template-columns:1fr 1.05fr;gap:56px;align-items:center;">
+    <div>
+      <div style="display:flex;align-items:center;gap:12px;height:14px;">
+        <span style="width:6px;height:6px;border-radius:999px;background:{{ roleHue }};box-shadow:0 0 12px {{ roleHue }};transition:background 520ms cubic-bezier(0.22,1,0.36,1),box-shadow 520ms cubic-bezier(0.22,1,0.36,1);"></span>
+        <span style="font:500 12px/1 'Geist',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:{{ roleHue }};opacity:{{ roleOpacity }};transition:opacity 380ms cubic-bezier(0.22,1,0.36,1),color 520ms cubic-bezier(0.22,1,0.36,1);">{{ roleWord }}</span>
+      </div>
+      <h1 style="margin:22px 0 0;font:500 clamp(46px,6.4vw,84px)/1.02 'Space Grotesk',sans-serif;letter-spacing:-0.04em;color:#F3F6FA;">Hasan Abuzaid<span style="color:#7DA8C4;">.</span></h1>
+      <p style="margin:26px 0 0;font:400 19px/1.6 'Geist',sans-serif;color:#B6BFCB;max-width:48ch;text-wrap:pretty;">I build systems that sense, decide and move.</p>
+      <div style="display:flex;gap:14px;margin-top:36px;flex-wrap:wrap;">
+        <a href="#engineering" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:15px 28px;white-space:nowrap;flex:none;font:500 16px/1 'Geist',sans-serif;letter-spacing:0.01em;border-radius:6px;text-decoration:none;transition:background 320ms cubic-bezier(0.22,1,0.36,1),border-color 320ms,box-shadow 320ms,color 320ms;background:#7DA8C4;border:1px solid #7DA8C4;color:#0A0C10;" style-hover="background:#9DC2D9;border-color:#9DC2D9;box-shadow:0 0 0 4px rgba(125,168,196,0.16), 0 10px 30px -10px rgba(125,168,196,0.5);">Engineering work</a>
+        <a href="#videography" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:15px 28px;white-space:nowrap;flex:none;font:500 16px/1 'Geist',sans-serif;letter-spacing:0.01em;border-radius:6px;text-decoration:none;transition:background 320ms cubic-bezier(0.22,1,0.36,1),border-color 320ms,box-shadow 320ms,color 320ms;background:transparent;border:1px solid #2A323C;color:#E7EBF0;" style-hover="border-color:#7DA8C4;box-shadow:0 0 0 4px rgba(125,168,196,0.12);">Watch the reel</a>
+      </div>
+    </div>
+    <figure style="margin:0;display:flex;flex-direction:column;gap:12px;">
+      <div style="position:relative;border-radius:8px;border:1px solid #232A34;overflow:hidden;">
+        <img src="uploads/hero-portrait.jpg" alt="Hasan Abuzaid speaking at a GJU Innovation Club event" style="display:block;width:100%;height:auto;transform:translate3d(0,{{ heroShift }},0) scale(1.06);will-change:transform;">
+        <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(10,12,16,0) 55%, rgba(10,12,16,0.45) 100%);"></div>
+        <div aria-hidden="true" style="position:absolute;inset:-50%;opacity:0.16;mix-blend-mode:overlay;background-image:url('data:image/svg+xml;utf8,&lt;svg xmlns=\'http://www.w3.org/2000/svg\' width=\'160\' height=\'160\'&gt;&lt;filter id=\'n\'&gt;&lt;feTurbulence type=\'fractalNoise\' baseFrequency=\'0.85\' numOctaves=\'3\'/&gt;&lt;/filter&gt;&lt;rect width=\'160\' height=\'160\' filter=\'url(%23n)\'/&gt;&lt;/svg&gt;');animation:grainShift 7s steps(6) infinite;"></div>
+      </div>
+      <figcaption style="font:400 12px/1.5 'Geist',sans-serif;letter-spacing:0.04em;color:#5C646F;">Speaking at Alumni Reunion — GJU, Amman</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="about" data-screen-label="About" style="position:relative;overflow:hidden;background:#0A0C10;border-bottom:1px solid #232A34;transition:background 520ms cubic-bezier(0.22,1,0.36,1);">
+  <div aria-hidden="true" style="position:absolute;top:56px;right:44px;font:600 clamp(96px,13vw,190px)/0.78 'Space Grotesk',sans-serif;letter-spacing:-0.06em;color:#C48D9E;opacity:0.055;pointer-events:none;user-select:none;">01</div>
+  <div style="position:absolute;inset:0;background:radial-gradient(58% 48% at 68% 12%, rgba(196,141,158,0.15) 0%, rgba(196,141,158,0) 70%), radial-gradient(46% 40% at 10% 92%, rgba(196,141,158,0.06) 0%, rgba(196,141,158,0) 70%);animation:auroraDrift 26s cubic-bezier(0.4,0,0.6,1) infinite alternate;" aria-hidden="true"></div>
+  <div data-m="wrap" data-reveal="1" style="position:relative;max-width:1200px;margin:0 auto;padding:104px 48px;">
+  <div style="display:flex;align-items:center;gap:14px;">
+    <span data-rule="1" style="width:34px;height:1px;background:#C48D9E;"></span>
+    <span style="font:500 12px/1 'Geist',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#C48D9E;">01 — About</span>
+  </div>
+  <div data-m="stack" style="display:grid;grid-template-columns:1.1fr 1fr;gap:88px;margin-top:28px;align-items:start;">
+    <div>
+      <h2 style="margin:0;font:500 clamp(34px,4vw,52px)/1.06 'Space Grotesk',sans-serif;letter-spacing:-0.035em;color:#F3F6FA;max-width:14ch;">From sensor to motion.</h2>
+      <p style="margin:28px 0 0;font:400 17px/1.65 'Geist',sans-serif;color:#B6BFCB;max-width:44ch;text-wrap:pretty;">Mechatronics student at GJU, now in Koblenz. I build the full loop, sensing, firmware, control and vision, and take it onto real hardware.</p>
+      <p style="margin:16px 0 0;font:400 15px/1.6 'Geist',sans-serif;color:#5C646F;max-width:44ch;">Off the bench: video production and student leadership.</p>
+    </div>
+    <div style="border-bottom:1px solid #232A34;">
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:baseline;padding:18px 0;border-top:1px solid #232A34;">
+        <span style="font:500 17px/1.3 'Space Grotesk',sans-serif;letter-spacing:-0.015em;color:#F3F6FA;">Vision</span>
+        <span style="font:400 14px/1.4 'Geist',sans-serif;color:#8A93A0;text-align:right;">OpenCV · YOLO · MediaPipe</span>
+      </div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:baseline;padding:18px 0;border-top:1px solid #232A34;">
+        <span style="font:500 17px/1.3 'Space Grotesk',sans-serif;letter-spacing:-0.015em;color:#F3F6FA;">Embedded</span>
+        <span style="font:400 14px/1.4 'Geist',sans-serif;color:#8A93A0;text-align:right;">ESP32 · C / C++ · PCB design</span>
+      </div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:baseline;padding:18px 0;border-top:1px solid #232A34;">
+        <span style="font:500 17px/1.3 'Space Grotesk',sans-serif;letter-spacing:-0.015em;color:#F3F6FA;">Control &amp; automation</span>
+        <span style="font:400 14px/1.4 'Geist',sans-serif;color:#8A93A0;text-align:right;">LQR · PLC · ROS</span>
+      </div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:baseline;padding:18px 0;border-top:1px solid #232A34;">
+        <span style="font:500 17px/1.3 'Space Grotesk',sans-serif;letter-spacing:-0.015em;color:#F3F6FA;">CAD</span>
+        <span style="font:400 14px/1.4 'Geist',sans-serif;color:#8A93A0;text-align:right;">SolidWorks · AutoCAD</span>
+      </div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:baseline;padding:18px 0;border-top:1px solid #232A34;">
+        <span style="font:500 17px/1.3 'Space Grotesk',sans-serif;letter-spacing:-0.015em;color:#F3F6FA;">Based in</span>
+        <span style="font:400 14px/1.4 'Geist',sans-serif;color:#8A93A0;text-align:right;">Koblenz, Germany</span>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+<section id="education" data-screen-label="Education" style="position:relative;overflow:hidden;background:#0C1014;border-bottom:1px solid #232A34;transition:background 520ms cubic-bezier(0.22,1,0.36,1);">
+  <div aria-hidden="true" style="position:absolute;top:56px;right:44px;font:600 clamp(96px,13vw,190px)/0.78 'Space Grotesk',sans-serif;letter-spacing:-0.06em;color:#8FA68E;opacity:0.055;pointer-events:none;user-select:none;">02</div>
+  <div style="position:absolute;inset:0;background:radial-gradient(58% 48% at 22% 18%, rgba(143,166,142,0.15) 0%, rgba(143,166,142,0) 70%), radial-gradient(46% 40% at 86% 88%, rgba(143,166,142,0.06) 0%, rgba(143,166,142,0) 70%);animation:auroraDrift 26s cubic-bezier(0.4,0,0.6,1) infinite alternate;" aria-hidden="true"></div>
+  <div data-m="wrap" data-reveal="1" style="position:relative;max-width:1200px;margin:0 auto;padding:104px 48px;">
+  <div style="display:flex;align-items:center;gap:14px;">
+    <span data-rule="1" style="width:34px;height:1px;background:#8FA68E;"></span>
+    <span style="font:500 12px/1 'Geist',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#8FA68E;">02 — Education</span>
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-top:22px;flex-wrap:wrap;">
+    <h2 style="margin:0;font:500 clamp(30px,3.4vw,44px)/1.12 'Space Grotesk',sans-serif;letter-spacing:-0.03em;color:#F3F6FA;max-width:24ch;">Trained on the German model.</h2>
+    <p style="margin:0;font:400 15px/1.6 'Geist',sans-serif;color:#8A93A0;max-width:36ch;">Mechatronics at GJU, with a year in Germany.</p>
+  </div>
+  <div data-m="stack" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:48px;">
+    <div style="display:flex;flex-direction:column;gap:16px;padding:28px;background:#151A21;border:1px solid #232A34;border-radius:8px;transition:border-color 320ms cubic-bezier(0.22,1,0.36,1),transform 320ms cubic-bezier(0.22,1,0.36,1),box-shadow 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="border-color:#8FA68E;transform:translateY(-3px);box-shadow:0 0 0 1px rgba(143,166,142,0.22), 0 18px 40px -22px rgba(143,166,142,0.35);">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;">
+        <span style="font:500 11px/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:#8FA68E;">Amman, Jordan</span>
+        <span style="font:400 13px/1 'Geist',sans-serif;color:#5C646F;font-variant-numeric:tabular-nums;">2022 — 2027</span>
+      </div>
+      <div>
+        <h3 style="margin:0;font:500 26px/1.15 'Space Grotesk',sans-serif;letter-spacing:-0.025em;color:#F3F6FA;">German Jordanian University</h3>
+        <div style="margin-top:8px;font:400 16px/1.5 'Geist',sans-serif;color:#B6BFCB;">BSc Mechatronics Engineering</div>
+      </div>
+      <p style="margin:0;font:400 14px/1.6 'Geist',sans-serif;color:#8A93A0;text-wrap:pretty;">Control, robotics, embedded design and machine vision.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:2px;">
+        <span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:999px;border:1px solid #2A323C;background:#12161C;font:500 12px/1.4 'Geist',sans-serif;letter-spacing:0.01em;color:#B6BFCB;white-space:nowrap;">Control systems</span>
+        <span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:999px;border:1px solid #2A323C;background:#12161C;font:500 12px/1.4 'Geist',sans-serif;letter-spacing:0.01em;color:#B6BFCB;white-space:nowrap;">Robotics</span>
+        <span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:999px;border:1px solid #2A323C;background:#12161C;font:500 12px/1.4 'Geist',sans-serif;letter-spacing:0.01em;color:#B6BFCB;white-space:nowrap;">Machine vision</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;padding:28px;background:#151A21;border:1px solid #232A34;border-radius:8px;transition:border-color 320ms cubic-bezier(0.22,1,0.36,1),transform 320ms cubic-bezier(0.22,1,0.36,1),box-shadow 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="border-color:#8FA68E;transform:translateY(-3px);box-shadow:0 0 0 1px rgba(143,166,142,0.22), 0 18px 40px -22px rgba(143,166,142,0.35);">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;">
+        <span style="font:500 11px/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:#8FA68E;">Koblenz, Germany</span>
+        <span style="font:400 13px/1 'Geist',sans-serif;color:#5C646F;font-variant-numeric:tabular-nums;">2026 — 2027</span>
+      </div>
+      <div>
+        <h3 style="margin:0;font:500 26px/1.15 'Space Grotesk',sans-serif;letter-spacing:-0.025em;color:#F3F6FA;">Hochschule Koblenz</h3>
+        <div style="margin-top:8px;font:400 16px/1.5 'Geist',sans-serif;color:#B6BFCB;">Study &amp; internship year — mechatronics</div>
+      </div>
+      <p style="margin:0;font:400 14px/1.6 'Geist',sans-serif;color:#8A93A0;text-wrap:pretty;">Engineering coursework and lab work, in German.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:2px;">
+        <span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:999px;border:1px solid #2A323C;background:#12161C;font:500 12px/1.4 'Geist',sans-serif;letter-spacing:0.01em;color:#B6BFCB;white-space:nowrap;">German language</span>
+        <span style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:999px;border:1px solid #2A323C;background:#12161C;font:500 12px/1.4 'Geist',sans-serif;letter-spacing:0.01em;color:#B6BFCB;white-space:nowrap;">Lab practice</span>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div data-reveal="1" style="position:relative;max-width:1200px;margin:0 auto;padding:0 48px 96px;">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;">
+      <span data-rule="1" style="width:34px;height:1px;background:#8FA68E;"></span>
+      <span style="font:500 12px/1 'Geist',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#8FA68E;">Languages</span>
+    </div>
+    <div data-m="stack lang" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid rgba(143,166,142,0.28);border-radius:8px;background:rgba(143,166,142,0.045);overflow:hidden;">
+      <div style="display:flex;flex-direction:column;gap:8px;padding:24px 26px;border-right:1px solid rgba(143,166,142,0.2);">
+        <span style="font:500 11px/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:#8FA68E;">Arabic</span>
+        <span style="font:500 20px/1.2 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;">Native</span>
+        <span style="font:400 13px/1.5 'Geist',sans-serif;color:#8A93A0;">Mother tongue</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;padding:24px 26px;border-right:1px solid rgba(143,166,142,0.2);">
+        <span style="font:500 11px/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:#8FA68E;">English</span>
+        <span style="font:500 20px/1.2 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;">Fluent — C2</span>
+        <span style="font:400 13px/1.5 'Geist',sans-serif;color:#8A93A0;">Degree taught in English</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;padding:24px 26px;border-right:1px solid rgba(143,166,142,0.2);">
+        <span style="font:500 11px/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:#8FA68E;">German</span>
+        <span style="font:500 20px/1.2 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;">B1 — improving</span>
+        <span style="font:400 13px/1.5 'Geist',sans-serif;color:#8A93A0;">Study year in Koblenz</span>
+      </div>    </div>
+  </div>
+</section>
+
+<section id="experience" data-screen-label="Experience" style="position:relative;overflow:hidden;background:#0A0C10;border-bottom:1px solid #232A34;transition:background 520ms cubic-bezier(0.22,1,0.36,1);">
+  <div aria-hidden="true" style="position:absolute;top:56px;right:44px;font:600 clamp(96px,13vw,190px)/0.78 'Space Grotesk',sans-serif;letter-spacing:-0.06em;color:#C4A47D;opacity:0.055;pointer-events:none;user-select:none;">03</div>
+  <div style="position:absolute;inset:0;background:radial-gradient(58% 48% at 78% 22%, rgba(196,164,125,0.15) 0%, rgba(196,164,125,0) 70%), radial-gradient(46% 40% at 8% 84%, rgba(196,164,125,0.06) 0%, rgba(196,164,125,0) 70%);animation:auroraDrift 26s cubic-bezier(0.4,0,0.6,1) infinite alternate;" aria-hidden="true"></div>
+  <div data-m="wrap" data-reveal="1" style="position:relative;max-width:1200px;margin:0 auto;padding:104px 48px;">
+  <div style="display:flex;align-items:center;gap:14px;">
+    <span data-rule="1" style="width:34px;height:1px;background:#C4A47D;"></span>
+    <span style="font:500 12px/1 'Geist',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#C4A47D;">03 — Experience</span>
+  </div>
+  <h2 style="margin:22px 0 0;font:500 clamp(30px,3.4vw,44px)/1.12 'Space Grotesk',sans-serif;letter-spacing:-0.03em;color:#F3F6FA;">Where I've worked.</h2>
+  <div style="margin-top:48px;display:flex;flex-direction:column;">
+
+    <div data-m="stack xp" style="display:grid;grid-template-columns:180px 1fr;gap:40px;padding:26px 12px;margin:0 -12px;border-radius:6px;border-top:1px solid #232A34;transition:background 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="background:rgba(196,164,125,0.055);">
+      <div style="font:400 14px/1.5 'Geist',sans-serif;color:#8A93A0;font-variant-numeric:tabular-nums;">Jun 2026 — Sep 2026</div>
+      <div>
+        <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;">
+          <h3 style="margin:0;font:500 21px/1.25 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;">Engineering Intern</h3>
+          <span style="font:400 15px/1.4 'Geist',sans-serif;color:#C4A47D;">Nexus Nature</span>
+          <a href="https://drive.google.com/file/d/1q5Ps1jL_jK2EMStD5X0549K5ttPt4JWG/view?usp=sharing" target="_blank" rel="noreferrer" style="font:500 13px/1.4 'Geist',sans-serif;color:#B6BFCB;text-decoration:none;border-bottom:1px solid #2A323C;transition:color 320ms cubic-bezier(0.22,1,0.36,1),border-color 320ms;" style-hover="color:#D9BF9C;border-color:#C4A47D;">Certificate of experience ↗</a>
+        </div>
+        <p style="margin:10px 0 0;font:400 15px/1.6 'Geist',sans-serif;color:#8A93A0;max-width:70ch;text-wrap:pretty;">Sensing firmware, sensor PCB and custom parts for a live hydroponic system.</p>
+      </div>
+    </div>
+
+    <div data-m="stack xp" style="display:grid;grid-template-columns:180px 1fr;gap:40px;padding:26px 12px;margin:0 -12px;border-radius:6px;border-top:1px solid #232A34;transition:background 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="background:rgba(196,164,125,0.055);">
+      <div style="font:400 14px/1.5 'Geist',sans-serif;color:#8A93A0;font-variant-numeric:tabular-nums;">Jun 2025 - Sep 2025</div>
+      <div>
+        <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;">
+          <h3 style="margin:0;font:500 21px/1.25 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;">Automation Trainee</h3>
+          <span style="font:400 15px/1.4 'Geist',sans-serif;color:#C4A47D;">Altaqadum Modern</span>
+        </div>
+        <p style="margin:10px 0 0;font:400 15px/1.6 'Geist',sans-serif;color:#8A93A0;max-width:70ch;text-wrap:pretty;">PLC programming and machine wiring on live production lines.</p>
+      </div>
+    </div>
+
+    <div data-m="stack xp" style="display:grid;grid-template-columns:180px 1fr;gap:40px;padding:26px 12px;margin:0 -12px;border-radius:6px;border-top:1px solid #232A34;transition:background 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="background:rgba(196,164,125,0.055);">
+      <div style="font:400 14px/1.5 'Geist',sans-serif;color:#8A93A0;font-variant-numeric:tabular-nums;">2019 — present</div>
+      <div>
+        <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;">
+          <h3 style="margin:0;font:500 21px/1.25 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;">Freelance Videographer &amp; Editor</h3>
+          <span style="font:400 15px/1.4 'Geist',sans-serif;color:#C4A47D;">Commercial &amp; creator work</span>
+        </div>
+        <p style="margin:10px 0 0;font:400 15px/1.6 'Geist',sans-serif;color:#8A93A0;max-width:70ch;text-wrap:pretty;">Shoot and edit for brands and creators.</p>
+      </div>
+    </div>
+
+  </div>
+  </div>
+</section>
+<section id="engineering" data-screen-label="Engineering" style="position:relative;overflow:hidden;background:#0C1014;border-bottom:1px solid #232A34;transition:background 520ms cubic-bezier(0.22,1,0.36,1);">
+  <div aria-hidden="true" style="position:absolute;top:56px;right:44px;font:600 clamp(96px,13vw,190px)/0.78 'Space Grotesk',sans-serif;letter-spacing:-0.06em;color:#7DBFC4;opacity:0.055;pointer-events:none;user-select:none;">04</div>
+  <div style="position:absolute;inset:0;background:radial-gradient(58% 48% at 14% 14%, rgba(125,191,196,0.15) 0%, rgba(125,191,196,0) 70%), radial-gradient(46% 40% at 88% 78%, rgba(125,191,196,0.06) 0%, rgba(125,191,196,0) 70%);animation:auroraDrift 26s cubic-bezier(0.4,0,0.6,1) infinite alternate;" aria-hidden="true"></div>
+  <div data-m="wrap" data-reveal="1" style="position:relative;max-width:1200px;margin:0 auto;padding:104px 48px;">
+  <div style="display:flex;align-items:center;gap:14px;">
+    <span data-rule="1" style="width:34px;height:1px;background:#7DBFC4;"></span>
+    <span style="font:500 12px/1 'Geist',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#7DBFC4;">04 — Engineering</span>
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-top:22px;flex-wrap:wrap;">
+    <h2 style="margin:0;font:500 clamp(30px,3.4vw,44px)/1.12 'Space Grotesk',sans-serif;letter-spacing:-0.03em;color:#F3F6FA;max-width:24ch;">Systems that sense, decide and move.</h2>
+    <p style="margin:0;font:400 15px/1.6 'Geist',sans-serif;color:#8A93A0;max-width:36ch;">Vision, embedded, control and PCB.</p>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:9px;margin-top:36px;">
+    <sc-for list="{{ filters }}" as="ft" hint-placeholder-count="5">
+      <button type="button" onClick="{{ ft.pick }}" style="padding:8px 16px;border-radius:999px;cursor:pointer;font:500 12px/1 'Geist',sans-serif;letter-spacing:0.06em;background:{{ ft.bg }};border:1px solid {{ ft.border }};color:{{ ft.color }};transition:background 320ms cubic-bezier(0.22,1,0.36,1),border-color 320ms cubic-bezier(0.22,1,0.36,1),color 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="border-color:#7DBFC4;color:#D6EDEF;">{{ ft.label }} <span style="opacity:0.55;">{{ ft.count }}</span></button>
+    </sc-for>
+  </div>
+
+  <sc-if value="{{ isCards }}" hint-placeholder-val="{{ true }}">
+    <div data-m="stack" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:28px;align-items:stretch;">
+      <sc-for list="{{ featured }}" as="p" hint-placeholder-count="3">
+        <div data-reveal="1" data-spot="card" style="position:relative;height:100%;overflow:hidden;display:flex;flex-direction:column;background:#151A21;border:1px solid #232A34;border-radius:8px;padding:28px;transition:border-color 320ms cubic-bezier(0.22,1,0.36,1),transform 320ms cubic-bezier(0.22,1,0.36,1),box-shadow 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="border-color:#7DBFC4;transform:translateY(-3px);box-shadow:0 0 0 1px rgba(125,191,196,0.25), 0 18px 40px -20px rgba(125,191,196,0.35);">
+          <span data-spotlight="1" aria-hidden="true" style="position:absolute;inset:0;opacity:0;transition:opacity 320ms cubic-bezier(0.22,1,0.36,1);pointer-events:none;"></span>
+          <div style="position:relative;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+            <h3 style="margin:0;font:500 23px/1.2 'Space Grotesk',sans-serif;letter-spacing:-0.025em;color:#F3F6FA;">{{ p.title }}</h3>
+            <span style="font:500 13px/1 'Space Grotesk',sans-serif;color:#5C646F;font-variant-numeric:tabular-nums;">{{ p.index }}</span>
+          </div>
+          <div style="margin-top:6px;font:500 11px/1.4 'Geist',sans-serif;letter-spacing:0.12em;text-transform:uppercase;color:#7DBFC4;">{{ p.kicker }}</div>
+          <p style="margin:14px 0 0;font:400 15px/1.6 'Geist',sans-serif;color:#B6BFCB;text-wrap:pretty;">{{ p.short }}</p>
+          <sc-if value="{{ p.open }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:12px 0 0;font:400 14px/1.65 'Geist',sans-serif;color:#8A93A0;text-wrap:pretty;">{{ p.long }}</p>
+          </sc-if>
+          <button type="button" onClick="{{ p.toggle }}" style="align-self:flex-start;margin-top:14px;padding:0;background:none;border:0;cursor:pointer;font:500 13px/1 'Geist',sans-serif;color:#7DBFC4;" style-hover="color:#9AD3D8;">{{ p.moreLabel }}</button>
+          <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:auto;padding-top:20px;">
+            <sc-for list="{{ p.tags }}" as="t" hint-placeholder-count="3">
+              <span style="padding:4px 10px;border:1px solid #2A323C;border-radius:999px;font:400 11px/1.4 'Geist',sans-serif;letter-spacing:0.04em;color:#8A93A0;">{{ t }}</span>
+            </sc-for>
+          </div>
+          <sc-if value="{{ p.hasRepo }}" hint-placeholder-val="{{ true }}">
+            <a href="{{ p.href }}" target="_blank" rel="noreferrer" style="margin-top:20px;padding-top:16px;border-top:1px solid #232A34;font:500 13px/1 'Geist',sans-serif;color:#B6BFCB;text-decoration:none;" style-hover="color:#9AD3D8;">{{ p.action }} ↗</a>
+          </sc-if>
+          <sc-if value="{{ p.noRepo }}" hint-placeholder-val="{{ false }}">
+            <span style="margin-top:20px;padding-top:16px;border-top:1px solid #232A34;font:500 13px/1 'Geist',sans-serif;color:#5C646F;">{{ p.action }}</span>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{ hasMoreProjects }}" hint-placeholder-val="{{ true }}">
+      <div style="margin-top:56px;">
+        <div style="display:flex;align-items:baseline;gap:12px;">
+          <span style="font:500 11px/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:#5C646F;">Also built</span>
+          <span style="font:400 12px/1 'Geist',sans-serif;color:#3F4650;font-variant-numeric:tabular-nums;">{{ moreCount }}</span>
+        </div>
+        <div style="margin-top:16px;">
+          <sc-for list="{{ moreProjects }}" as="p" hint-placeholder-count="6">
+            <div data-m="row" style="display:grid;grid-template-columns:44px 1fr 1.3fr auto;gap:24px;align-items:baseline;padding:18px 8px;border-top:1px solid #232A34;transition:background 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="background:#12161C;">
+              <span style="font:500 12px/1.4 'Space Grotesk',sans-serif;color:#5C646F;font-variant-numeric:tabular-nums;">{{ p.index }}</span>
+              <span style="font:500 16px/1.35 'Space Grotesk',sans-serif;letter-spacing:-0.015em;color:#E7EBF0;">{{ p.title }}</span>
+              <span style="font:400 13px/1.55 'Geist',sans-serif;color:#8A93A0;text-wrap:pretty;">{{ p.short }}</span>
+              <sc-if value="{{ p.hasRepo }}" hint-placeholder-val="{{ true }}">
+                <a href="{{ p.href }}" target="_blank" rel="noreferrer" style="font:500 12px/1.4 'Geist',sans-serif;color:#7DBFC4;text-decoration:none;white-space:nowrap;" style-hover="color:#9AD3D8;">GitHub ↗</a>
+              </sc-if>
+              <sc-if value="{{ p.noRepo }}" hint-placeholder-val="{{ false }}">
+                <span style="font:400 12px/1.4 'Geist',sans-serif;color:#3F4650;white-space:nowrap;">{{ p.kicker }}</span>
+              </sc-if>
+            </div>
+          </sc-for>
+          <div style="border-top:1px solid #232A34;"></div>
+        </div>
+      </div>
+    </sc-if>
+  </sc-if>
+
+  <sc-if value="{{ isRows }}" hint-placeholder-val="{{ false }}">
+    <div style="margin-top:48px;">
+      <sc-for list="{{ projects }}" as="p" hint-placeholder-count="7">
+        <sc-if value="{{ p.hasRepo }}" hint-placeholder-val="{{ true }}">
+          <a data-m="row" href="{{ p.href }}" target="_blank" rel="noreferrer" style="display:grid;grid-template-columns:56px 1.1fr 1.4fr auto;gap:32px;align-items:center;padding:24px 8px;border-top:1px solid #232A34;text-decoration:none;" style-hover="background:#12161C;">
+            <span style="font:500 13px/1 'Space Grotesk',sans-serif;color:#5C646F;font-variant-numeric:tabular-nums;">{{ p.index }}</span>
+            <span style="font:500 22px/1.2 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;">{{ p.title }}</span>
+            <span style="font:400 14px/1.55 'Geist',sans-serif;color:#8A93A0;">{{ p.short }}</span>
+            <span style="font:400 13px/1 'Geist',sans-serif;color:#7DBFC4;white-space:nowrap;">{{ p.kicker }} &nbsp;↗</span>
+          </a>
+        </sc-if>
+        <sc-if value="{{ p.noRepo }}" hint-placeholder-val="{{ false }}">
+          <div data-m="row" style="display:grid;grid-template-columns:56px 1.1fr 1.4fr auto;gap:32px;align-items:center;padding:24px 8px;border-top:1px solid #232A34;">
+            <span style="font:500 13px/1 'Space Grotesk',sans-serif;color:#5C646F;font-variant-numeric:tabular-nums;">{{ p.index }}</span>
+            <span style="font:500 22px/1.2 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;">{{ p.title }}</span>
+            <span style="font:400 14px/1.55 'Geist',sans-serif;color:#8A93A0;">{{ p.short }}</span>
+            <span style="font:400 13px/1 'Geist',sans-serif;color:#5C646F;white-space:nowrap;">{{ p.kicker }}</span>
+          </div>
+        </sc-if>
+      </sc-for>
+      <div style="border-top:1px solid #232A34;"></div>
+    </div>
+  </sc-if>
+
+  <div style="margin-top:40px;">
+    <a href="https://github.com/hasan-abuzaid" target="_blank" rel="noreferrer" style="display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:6px;background:rgba(125,191,196,0.14);border:1px solid rgba(125,191,196,0.45);color:#9AD3D8;font:500 14px/1 'Geist',sans-serif;text-decoration:none;transition:background 320ms cubic-bezier(0.22,1,0.36,1),border-color 320ms,box-shadow 320ms;" style-hover="background:rgba(125,191,196,0.22);border-color:#7DBFC4;box-shadow:0 0 0 1px rgba(125,191,196,0.3), 0 14px 34px -18px rgba(125,191,196,0.5);">All repositories on GitHub ↗</a>
+  </div>
+  </div>
+</section>
+<section id="videography" data-screen-label="Videography" style="position:relative;overflow:hidden;background:#0E1116;transition:background 520ms cubic-bezier(0.22,1,0.36,1);border-bottom:1px solid #232A34;background:#0E1116;">
+  <div aria-hidden="true" style="position:absolute;top:56px;right:44px;font:600 clamp(96px,13vw,190px)/0.78 'Space Grotesk',sans-serif;letter-spacing:-0.06em;color:#C48D7D;opacity:0.055;pointer-events:none;user-select:none;">05</div><div style="position:absolute;inset:0;background:radial-gradient(58% 48% at 72% 16%, rgba(196,141,125,0.15) 0%, rgba(196,141,125,0) 70%), radial-gradient(46% 40% at 18% 90%, rgba(196,164,125,0.07) 0%, rgba(196,164,125,0) 70%);animation:auroraDrift 26s cubic-bezier(0.4,0,0.6,1) infinite alternate;" aria-hidden="true"></div>
+  <div data-m="wrap" data-reveal="1" style="position:relative;max-width:1200px;margin:0 auto;padding:104px 48px;">
+    <div style="display:flex;align-items:center;gap:14px;">
+    <span data-rule="1" style="width:34px;height:1px;background:#C48D7D;"></span>
+    <span style="font:500 12px/1 'Geist',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#C48D7D;">05 — Videography</span>
+  </div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-top:22px;flex-wrap:wrap;">
+      <h2 style="margin:0;font:500 clamp(30px,3.4vw,44px)/1.12 'Space Grotesk',sans-serif;letter-spacing:-0.03em;color:#F3F6FA;max-width:22ch;">Also behind the camera.</h2>
+      <p style="margin:0;font:400 15px/1.6 'Geist',sans-serif;color:#8A93A0;max-width:36ch;">Shoot, edit, color.</p>
+    </div>
+
+
+    <div style="margin-top:56px;padding-top:36px;border-top:1px solid #232A34;">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:24px;flex-wrap:wrap;">
+        <h3 style="margin:0;font:500 22px/1.2 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;">Selected reels</h3>
+      </div>
+      <div data-m="reels" style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:24px;">
+        <sc-for list="{{ reels }}" as="r" hint-placeholder-count="5">
+          <div data-reveal="1" data-reel="1" style="position:relative;width:100%;aspect-ratio:9 / 16;border-radius:8px;border:1px solid #232A34;background:linear-gradient(160deg,#151A21,#0B0E12);overflow:hidden;transition:border-color 320ms cubic-bezier(0.22,1,0.36,1),transform 320ms cubic-bezier(0.22,1,0.36,1),box-shadow 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="border-color:#C48D7D;transform:translateY(-3px);box-shadow:0 0 0 1px rgba(196,141,125,0.28), 0 20px 44px -22px rgba(196,141,125,0.5);">
+            <image-slot id="{{ r.slotId }}" src="{{ r.cover }}" shape="rect" fit="cover" placeholder="Drop reel cover"></image-slot>
+            <span aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg, rgba(10,12,16,0.1) 0%, rgba(10,12,16,0) 42%, rgba(10,12,16,0.78) 100%);"></span>
+            <button type="button" onClick="{{ r.open }}" title="{{ r.title }}" style="position:absolute;bottom:12px;right:12px;width:44px;height:44px;padding:0;border-radius:999px;border:1px solid rgba(196,141,125,0.55);background:rgba(10,12,16,0.5);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;color:#C48D7D;font:400 15px/1 'Geist',sans-serif;cursor:pointer;transition:background 320ms cubic-bezier(0.22,1,0.36,1),border-color 320ms;" style-hover="background:rgba(196,141,125,0.24);border-color:#C48D7D;">▶</button>
+            <span style="position:absolute;left:14px;right:66px;bottom:16px;display:flex;flex-direction:column;gap:4px;text-align:left;pointer-events:none;">
+              <span style="font:500 13px/1.3 'Geist',sans-serif;color:#E7EBF0;">{{ r.title }}</span>
+              <span style="font:400 11px/1.3 'Geist',sans-serif;letter-spacing:0.06em;text-transform:uppercase;color:#C48D7D;">{{ r.platform }}</span>
+            </span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:20px;margin-top:32px;padding:22px 24px;border:1px solid #2A323C;border-radius:8px;background:rgba(196,141,125,0.045);flex-wrap:wrap;">
+        <span style="font:500 11px/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:#C48D7D;padding-top:3px;white-space:nowrap;">Own kit</span>
+        <p style="margin:0;font:400 15px/1.6 'Geist',sans-serif;color:#B6BFCB;max-width:62ch;text-wrap:pretty;">Own Sony A7 III and lenses.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="leadership" data-screen-label="Leadership" style="position:relative;overflow:hidden;background:#0A0C10;border-bottom:1px solid #232A34;transition:background 520ms cubic-bezier(0.22,1,0.36,1);">
+  <div aria-hidden="true" style="position:absolute;top:56px;right:44px;font:600 clamp(96px,13vw,190px)/0.78 'Space Grotesk',sans-serif;letter-spacing:-0.06em;color:#9D93C4;opacity:0.055;pointer-events:none;user-select:none;">06</div>
+  <div style="position:absolute;inset:0;background:radial-gradient(58% 48% at 26% 16%, rgba(157,147,196,0.15) 0%, rgba(157,147,196,0) 70%), radial-gradient(46% 40% at 82% 86%, rgba(157,147,196,0.06) 0%, rgba(157,147,196,0) 70%);animation:auroraDrift 26s cubic-bezier(0.4,0,0.6,1) infinite alternate;" aria-hidden="true"></div>
+  <div data-m="wrap" data-reveal="1" style="position:relative;max-width:1200px;margin:0 auto;padding:104px 48px;">
+  <div style="display:flex;align-items:center;gap:14px;">
+    <span data-rule="1" style="width:34px;height:1px;background:#9D93C4;"></span>
+    <span style="font:500 12px/1 'Geist',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#9D93C4;">06 — Leadership</span>
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-top:22px;flex-wrap:wrap;">
+    <h2 style="margin:0;font:500 clamp(30px,3.4vw,44px)/1.12 'Space Grotesk',sans-serif;letter-spacing:-0.03em;color:#F3F6FA;max-width:24ch;">Clubs, events, and the people behind them.</h2>
+    <p style="margin:0;font:400 15px/1.6 'Geist',sans-serif;color:#8A93A0;max-width:36ch;">Student clubs and events.</p>
+  </div>
+
+  <div data-m="stack" style="display:grid;grid-template-columns:repeat(2,minmax(0,380px));gap:20px;margin-top:48px;justify-content:center;">
+    <div style="background:#151A21;border:1px solid #232A34;border-radius:8px;padding:26px;transition:border-color 320ms cubic-bezier(0.22,1,0.36,1),box-shadow 320ms,transform 320ms;" style-hover="border-color:#9D93C4;transform:translateY(-3px);box-shadow:0 0 0 1px rgba(157,147,196,0.25), 0 18px 40px -20px rgba(157,147,196,0.4);">
+      <div style="font:500 11px/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:#9D93C4;">2024 — present</div>
+      <div style="margin-top:14px;font:500 22px/1.2 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;">President</div>
+      <div style="margin-top:6px;font:400 15px/1.4 'Geist',sans-serif;color:#B6BFCB;">Innovation Club</div>
+      <p style="margin:14px 0 0;font:400 14px/1.6 'Geist',sans-serif;color:#8A93A0;">Grew the club to 1,500+ members.</p>
+    </div><div style="background:#151A21;border:1px solid #232A34;border-radius:8px;padding:26px;transition:border-color 320ms cubic-bezier(0.22,1,0.36,1),box-shadow 320ms,transform 320ms;" style-hover="border-color:#9D93C4;transform:translateY(-3px);box-shadow:0 0 0 1px rgba(157,147,196,0.25), 0 18px 40px -20px rgba(157,147,196,0.4);">
+      <div style="font:500 11px/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:#9D93C4;">2025 — PRESENT</div>
+      <div style="margin-top:14px;font:500 22px/1.2 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;">Co-Chair</div>
+      <div style="margin-top:6px;font:400 15px/1.4 'Geist',sans-serif;color:#B6BFCB;">AAAI Jordan Chapter</div>
+      <p style="margin:14px 0 0;font:400 14px/1.6 'Geist',sans-serif;color:#8A93A0;">Ran technical workshops and competitions.</p>
+    </div>
+  </div>
+
+  <div data-m="stack" style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:20px;">
+    <div>
+      <div style="position:relative;aspect-ratio:16 / 9;width:100%;border-radius:8px;border:1px solid #232A34;overflow:hidden;">
+        <img src="uploads/leadership-1.jpg" alt="Innovation Club committee at a club-hosted evening event" style="display:block;width:100%;height:100%;object-fit:cover;filter:saturate(0.94);">
+        <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(10,12,16,0) 55%, rgba(10,12,16,0.4) 100%);"></div>
+      </div>
+      <div style="margin-top:12px;font:400 13px/1.4 'Geist',sans-serif;color:#5C646F;"><br></div>
+    </div>
+    <div>
+      <div style="position:relative;aspect-ratio:16 / 9;width:100%;border-radius:8px;border:1px solid #232A34;overflow:hidden;">
+        <img src="uploads/leadership-2.jpg" alt="Prize day at a club-run competition, German Jordanian University" style="display:block;width:100%;height:100%;object-fit:cover;filter:saturate(0.94);">
+        <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(10,12,16,0) 55%, rgba(10,12,16,0.4) 100%);"></div>
+      </div>
+      
+    </div>
+  </div>
+  <div style="display:flex;gap:14px;margin-top:40px;flex-wrap:wrap;align-items:center;justify-content:center;">
+    <a href="https://innovationclub.online" target="_blank" rel="noreferrer" style="flex:none;white-space:nowrap;display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:6px;background:rgba(157,147,196,0.14);border:1px solid rgba(157,147,196,0.45);color:#B5ACD9;font:500 14px/1 'Geist',sans-serif;text-decoration:none;transition:background 320ms cubic-bezier(0.22,1,0.36,1),border-color 320ms,box-shadow 320ms;" style-hover="background:rgba(157,147,196,0.22);border-color:#9D93C4;box-shadow:0 0 0 1px rgba(157,147,196,0.3), 0 14px 34px -18px rgba(157,147,196,0.5);">Everything I've done with the club ↗</a>
+    <a href="https://aaai-jo.site/" target="_blank" rel="noreferrer" style="flex:none;white-space:nowrap;display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:6px;background:transparent;border:1px solid #2A323C;color:#B6BFCB;font:500 14px/1 'Geist',sans-serif;text-decoration:none;transition:border-color 320ms cubic-bezier(0.22,1,0.36,1),color 320ms;" style-hover="border-color:rgba(157,147,196,0.6);color:#B5ACD9;">AAAI chapter ↗</a>
+  </div>
+</div></section>
+<sc-if value="{{ showAccomplishments }}" hint-placeholder-val="{{ true }}">
+  <section id="accomplishments" data-screen-label="Accomplishments" style="position:relative;overflow:hidden;background:#0C1014;border-bottom:1px solid #232A34;transition:background 520ms cubic-bezier(0.22,1,0.36,1);">
+  <div aria-hidden="true" style="position:absolute;top:56px;right:44px;font:600 clamp(96px,13vw,190px)/0.78 'Space Grotesk',sans-serif;letter-spacing:-0.06em;color:#8FA68E;opacity:0.055;pointer-events:none;user-select:none;">07</div>
+    <div style="position:absolute;inset:0;background:radial-gradient(58% 48% at 50% 14%, rgba(143,166,142,0.15) 0%, rgba(157,147,196,0) 70%), radial-gradient(46% 40% at 88% 90%, rgba(157,147,196,0.06) 0%, rgba(157,147,196,0) 70%);animation:auroraDrift 26s cubic-bezier(0.4,0,0.6,1) infinite alternate;" aria-hidden="true"></div>
+    <div data-m="wrap" data-reveal="1" style="position:relative;max-width:1200px;margin:0 auto;padding:104px 48px;">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <span data-rule="1" style="width:34px;height:1px;background:#8FA68E;"></span>
+      <span style="font:500 12px/1 'Geist',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#8FA68E;">07 — Accomplishments</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-top:22px;flex-wrap:wrap;">
+      <h2 style="margin:0;font:500 clamp(30px,3.4vw,44px)/1.12 'Space Grotesk',sans-serif;letter-spacing:-0.03em;color:#F3F6FA;max-width:22ch;">Selected and placed.</h2>
+    </div>
+    <div data-m="stack" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:48px;">
+      <div style="display:flex;flex-direction:column;background:#151A21;border:1px solid #232A34;border-radius:8px;overflow:hidden;transition:border-color 320ms cubic-bezier(0.22,1,0.36,1),transform 320ms cubic-bezier(0.22,1,0.36,1),box-shadow 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="border-color:#8FA68E;transform:translateY(-3px);box-shadow:0 0 0 1px rgba(143,166,142,0.25), 0 18px 40px -20px rgba(143,166,142,0.35);">
+        <div style="position:relative;width:100%;aspect-ratio:16 / 10;border-bottom:1px solid #232A34;">
+          <image-slot id="accomplishment-fintech" src="uploads/accomplishment-fintech.jpg" shape="rect" fit="cover" placeholder="Drop hackathon photo"></image-slot>
+        </div>
+        <div style="display:flex;flex-direction:column;padding:26px;">
+          <div style="font:500 11px/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:#8FA68E;">Top 5 nationally</div>
+          <h3 style="margin:14px 0 0;font:500 22px/1.25 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;text-wrap:pretty;">National FinTech Hackathon</h3>
+          <p style="margin:12px 0 0;font:400 14px/1.65 'Geist',sans-serif;color:#8A93A0;text-wrap:pretty;">Concept, build and pitch.</p>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;background:#151A21;border:1px solid #232A34;border-radius:8px;overflow:hidden;transition:border-color 320ms cubic-bezier(0.22,1,0.36,1),transform 320ms cubic-bezier(0.22,1,0.36,1),box-shadow 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="border-color:#8FA68E;transform:translateY(-3px);box-shadow:0 0 0 1px rgba(143,166,142,0.25), 0 18px 40px -20px rgba(143,166,142,0.35);">
+        <div style="position:relative;width:100%;aspect-ratio:16 / 10;border-bottom:1px solid #232A34;">
+          <image-slot id="accomplishment-daad" src="uploads/accomplishment-daad.jpg" shape="rect" fit="cover" placeholder="Drop project photo"></image-slot>
+        </div>
+        <div style="display:flex;flex-direction:column;padding:26px;">
+          <div style="font:500 11px/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:#8FA68E;">DAAD funded</div>
+          <h3 style="margin:14px 0 0;font:500 22px/1.25 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;text-wrap:pretty;">Selected — University of Duisburg-Essen</h3>
+          <p style="margin:12px 0 0;font:400 14px/1.65 'Geist',sans-serif;color:#8A93A0;text-wrap:pretty;">DAAD-funded research project.</p>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+</sc-if>
+
+<section id="contact" data-screen-label="Contact" style="position:relative;overflow:hidden;background:#0A0C10;transition:background 520ms cubic-bezier(0.22,1,0.36,1);">
+  <div aria-hidden="true" style="position:absolute;top:56px;right:44px;font:600 clamp(96px,13vw,190px)/0.78 'Space Grotesk',sans-serif;letter-spacing:-0.06em;color:#7DA8C4;opacity:0.055;pointer-events:none;user-select:none;">08</div>
+  <div style="position:absolute;inset:0;background:radial-gradient(58% 48% at 50% 100%, rgba(125,168,196,0.15) 0%, rgba(125,168,196,0) 70%), radial-gradient(46% 40% at 85% 8%, rgba(143,166,142,0.07) 0%, rgba(143,166,142,0) 70%);animation:auroraDrift 26s cubic-bezier(0.4,0,0.6,1) infinite alternate;" aria-hidden="true"></div>
+  <div data-m="wrap" data-reveal="1" style="position:relative;max-width:1200px;margin:0 auto;padding:120px 48px;">
+    <div style="display:flex;align-items:center;gap:14px;">
+    <span data-rule="1" style="width:34px;height:1px;background:#7DA8C4;"></span>
+    <span style="font:500 12px/1 'Geist',sans-serif;letter-spacing:0.16em;text-transform:uppercase;color:#7DA8C4;">08 — Contact</span>
+  </div>
+    <h2 style="margin:22px 0 0;font:500 clamp(36px,4.6vw,60px)/1.06 'Space Grotesk',sans-serif;letter-spacing:-0.035em;color:#F3F6FA;max-width:20ch;">Let's build something worth shooting.</h2>
+    <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:24px;">
+      <p style="margin:0;font:400 17px/1.65 'Geist',sans-serif;color:#B6BFCB;max-width:52ch;">Open to engineering internships and roles.</p>
+    </div>
+    <div data-m="stack contact" style="position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:56px;border-top:1px solid #232A34;">
+      <a href="mailto:hasan.abuzaid04@gmail.com" style="display:flex;flex-direction:column;gap:8px;padding:24px 24px 24px 0;text-decoration:none;border-right:1px solid #232A34;transition:background 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="background:rgba(125,168,196,0.06);">
+        <span style="font: 500 11px / 1 Geist, sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(92, 100, 111);">Email</span>
+        <span style="font: 400 16px / 1.4 Geist, sans-serif; color: rgb(231, 235, 240);">hasan.abuzaid04@gmail.com</span>
+      </a>
+      <a href="https://www.linkedin.com/in/hasan-abuzaid-/" target="_top" rel="noopener" onClick="{{ openLinkedIn }}" style="display:flex;flex-direction:column;gap:8px;padding:24px;text-decoration:none;border-right:1px solid #232A34;transition:background 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="background:rgba(125,168,196,0.06);">
+        <span style="font:500 11px/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:#5C646F;">{{ liHint }}</span>
+        <span style="font:400 16px/1.4 'Geist',sans-serif;color:#E7EBF0;">@Hasan-abuzaid</span>
+      </a>
+      <a href="https://github.com/hasan-abuzaid" target="_blank" rel="noreferrer" style="display:flex;flex-direction:column;gap:8px;padding:24px;text-decoration:none;border-right:1px solid #232A34;transition:background 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="background:rgba(125,168,196,0.06);">
+        <span style="font:500 11px/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:#5C646F;">GitHub</span>
+        <span style="font:400 16px/1.4 'Geist',sans-serif;color:#E7EBF0;">@hasan-abuzaid</span>
+      </a>
+      <div style="display:flex;flex-direction:column;gap:8px;padding:24px;">
+        <span style="font:500 11px/1 'Geist',sans-serif;letter-spacing:0.14em;text-transform:uppercase;color:#5C646F;">Location</span>
+        <span style="font:400 16px/1.4 'Geist',sans-serif;color:#B6BFCB;">Koblenz, Germany</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<sc-if value="{{ lightboxOpen }}" hint-placeholder-val="{{ false }}">
+  <div data-m="lb" onClick="{{ closeLightbox }}" style="position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:48px;background:rgba(6,8,11,0.88);backdrop-filter:blur(14px) saturate(1.2);cursor:zoom-out;">
+    <div onClick="{{ stopClick }}" style="position:relative;display:flex;flex-direction:column;gap:14px;align-items:center;max-height:100%;cursor:default;">
+      <div style="display:flex;align-items:baseline;gap:14px;width:min(420px,86vw);">
+        <span style="font:500 12px/1.3 'Geist',sans-serif;letter-spacing:0.1em;text-transform:uppercase;color:#C48D7D;">{{ activeReelPlatform }}</span>
+        <span style="font:500 16px/1.25 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#F3F6FA;">{{ activeReelTitle }}</span>
+        <a href="{{ activeReelUrl }}" target="_blank" rel="noreferrer" style="margin-left:auto;font:500 12px/1.3 'Geist',sans-serif;color:#B6BFCB;text-decoration:none;white-space:nowrap;" style-hover="color:#D9A997;">{{ activeReelOpenLabel }} ↗</a>
+      </div>
+      <div style="position:relative;width:min(420px,86vw);height:min(72vh,760px);border-radius:10px;border:1px solid rgba(196,141,125,0.35);background:#0B0E12;overflow:hidden;box-shadow:0 40px 120px -40px rgba(196,141,125,0.55);">
+        <iframe src="{{ activeReelEmbed }}" title="{{ activeReelTitle }}" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen="true" scrolling="no" frameborder="0" style="display:block;width:100%;height:100%;border:0;"></iframe>
+      </div>
+      <div style="display:flex;align-items:center;gap:18px;">
+        <button type="button" onClick="{{ prevReel }}" style="padding:9px 16px;border-radius:999px;background:transparent;border:1px solid #2A323C;color:#B6BFCB;font:500 12px/1 'Geist',sans-serif;cursor:pointer;transition:border-color 320ms cubic-bezier(0.22,1,0.36,1),color 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="border-color:rgba(196,141,125,0.7);color:#D9A997;">← Prev</button>
+        <span style="font:400 12px/1.4 'Geist',sans-serif;letter-spacing:0.08em;text-transform:uppercase;color:#5C646F;">{{ reelCounter }} · Esc to close</span>
+        <button type="button" onClick="{{ nextReel }}" style="padding:9px 16px;border-radius:999px;background:transparent;border:1px solid #2A323C;color:#B6BFCB;font:500 12px/1 'Geist',sans-serif;cursor:pointer;transition:border-color 320ms cubic-bezier(0.22,1,0.36,1),color 320ms cubic-bezier(0.22,1,0.36,1);" style-hover="border-color:rgba(196,141,125,0.7);color:#D9A997;">Next →</button>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<footer style="border-top:1px solid #232A34;">
+  <div aria-hidden="true" style="height:2px;background:linear-gradient(90deg,#7DA8C4,#C48D9E,#8FA68E,#C4A47D,#7DBFC4,#C48D7D,#9D93C4);opacity:0.5;"></div>
+  <div data-m="fwrap" style="max-width:1200px;margin:0 auto;padding:32px 48px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;">
+    <div style="font:600 17px/1 'Space Grotesk',sans-serif;letter-spacing:-0.02em;color:#B6BFCB;">Hasan<span style="color:#7DA8C4;">.</span></div>
+    <div style="font:400 13px/1.4 'Geist',sans-serif;color:#5C646F;">Mechatronics engineering — Koblenz, Germany</div>
+  </div>
+</footer></x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;projectLayout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;cards&quot;,&quot;rows&quot;],&quot;default&quot;:&quot;cards&quot;,&quot;tsType&quot;:&quot;'cards' | 'rows'&quot;,&quot;section&quot;:&quot;Work grid&quot;},&quot;showAccomplishments&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;}}">
+class Component extends DCLogic {
+  state = { scrolled: false, activeNav: null, open: {}, progressPct: '0%', y: 0, activeReel: null, filter: 'All', lang: 'en', roleIdx: 0, roleVisible: true, copied: false };
+  componentDidMount() {
+    this.ids = ['about', 'education', 'experience', 'engineering', 'videography', 'leadership', 'accomplishments', 'contact'];
+    this.onScroll = () => {
+      const y = window.scrollY;
+      let active = null;
+      for (const id of this.ids) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= 140) active = id;
+      }
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const past = y > (window.innerHeight * 0.75);
+      this.driftNumerals();
+      this.setState({
+        progressPct: (max > 0 ? Math.min(100, (y / max) * 100) : 0).toFixed(2) + '%',
+        y,
+        dockShown: past,
+        scrolled: y > 24,
+        activeNav: active ? active[0].toUpperCase() + active.slice(1) : null
+      });
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    this.io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.setAttribute('data-reveal', 'in'); this.io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+    this.wordIo = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const words = e.target.querySelectorAll('[data-word="0"]');
+        words.forEach((w, i) => {
+          w.style.transitionDelay = (i * 42) + 'ms';
+          requestAnimationFrame(() => w.setAttribute('data-word', 'in'));
+        });
+        this.wordIo.unobserve(e.target);
+      });
+    }, { rootMargin: '0px 0px -14% 0px', threshold: 0.2 });
+
+    this.splitHeadings = () => {
+      document.querySelectorAll('section h2').forEach(h => {
+        if (h.dataset.split) return;
+        h.dataset.split = '1';
+        const text = h.textContent;
+        const rev0 = this.deReverse();
+        const raw = text.trim();
+        h.dataset.en = rev0[raw] || raw;
+        h.textContent = '';
+        text.split(/(\s+)/).forEach(tok => {
+          if (!tok.trim()) { h.appendChild(document.createTextNode(' ')); return; }
+          const s = document.createElement('span');
+          s.setAttribute('data-word', '0');
+          s.textContent = tok;
+          h.appendChild(s);
+        });
+        this.wordIo.observe(h);
+      });
+    };
+
+    this.markTargets = () => {
+      document.querySelectorAll('section[id]').forEach(sec => {
+        if (sec.id === 'home') return;
+        const wrap = sec.querySelector('[data-reveal]') || sec;
+        const kids = wrap.querySelectorAll(':scope > div, :scope > p, :scope > h2, :scope > h3, :scope > nav, :scope > figure');
+        kids.forEach((el, i) => {
+          if (el.hasAttribute('data-reveal') || el.getAttribute('aria-hidden') === 'true') return;
+          el.setAttribute('data-reveal', '1');
+          el.style.transitionDelay = Math.min(i * 70, 350) + 'ms';
+        });
+      });
+    };
+
+    this.observe = () => {
+      this.markTargets();
+      this.splitHeadings();
+      document.querySelectorAll('[data-reveal="1"]').forEach(el => this.io.observe(el));
+    };
+    this.observe();
+    try {
+      const saved = localStorage.getItem('portfolio-lang');
+      if (saved === 'de') this.setLang('de');
+    } catch (e) {}
+    this.reobserve = setInterval(this.observe, 900);
+    this.roles = [
+      { word: 'Mechatronics engineering', hue: '#7DBFC4' },
+      { word: 'Computer vision & embedded', hue: '#8FA68E' },
+      { word: 'Videography & editing', hue: '#C48D7D' },
+      { word: 'Student leadership', hue: '#9D93C4' }
+    ];
+    this.roleTimer = setInterval(() => {
+      this.setState({ roleVisible: false });
+      setTimeout(() => this.setState(s => ({ roleIdx: (s.roleIdx + 1) % this.roles.length, roleVisible: true })), 420);
+    }, 3200);
+    this.driftNumerals = () => {
+      document.querySelectorAll('section[id]').forEach(sec => {
+        const num = sec.querySelector(':scope > div[aria-hidden="true"][style*="clamp(96px"]');
+        if (!num) return;
+        const r = sec.getBoundingClientRect();
+        const p = Math.max(-1, Math.min(1, (r.top + r.height / 2 - window.innerHeight / 2) / window.innerHeight));
+        num.style.transform = 'translate3d(0,' + (p * -46).toFixed(1) + 'px,0)';
+        num.style.opacity = (0.055 + (1 - Math.abs(p)) * 0.03).toFixed(3);
+      });
+    };
+    this.onMove = (e) => {
+      const card = e.target.closest && e.target.closest('[data-spot="card"]');
+      document.querySelectorAll('[data-spotlight="1"]').forEach(s => { if (!card || s.parentElement !== card) s.style.opacity = '0'; });
+      if (!card) return;
+      const spot = card.querySelector('[data-spotlight="1"]');
+      if (!spot) return;
+      const r = card.getBoundingClientRect();
+      spot.style.background = 'radial-gradient(320px 220px at ' + (e.clientX - r.left) + 'px ' + (e.clientY - r.top) + 'px, rgba(125,191,196,0.14) 0%, rgba(125,191,196,0) 70%)';
+      spot.style.opacity = '1';
+    };
+    window.addEventListener('mousemove', this.onMove, { passive: true });
+    this.onKey = (e) => { if (!this.state.activeReel) return;
+      if (e.key === 'Escape') this.setState({ activeReel: null });
+      if (e.key === 'ArrowRight') this.stepReel(1);
+      if (e.key === 'ArrowLeft') this.stepReel(-1);
+    };
+    window.addEventListener('keydown', this.onKey);
+    this.onScroll();
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('keydown', this.onKey);
+    window.removeEventListener('mousemove', this.onMove);
+    clearInterval(this.roleTimer);
+    if (this.io) this.io.disconnect();
+    if (this.wordIo) this.wordIo.disconnect();
+    clearInterval(this.reobserve);
+  }
+  renderVals() {
+    const mapped = this.projectData().filter(p => this.state.filter === 'All' || p.cat === this.state.filter).map((p, i) => ({
+        ...p,
+        index: String(i + 1).padStart(2, '0'),
+        open: !!this.state.open[p.title],
+        hasRepo: !!p.href, noRepo: !p.href,
+        title: this.t(p.title), kicker: this.t(p.kicker), short: this.t(p.short), long: this.t(p.long), action: this.t(p.action),
+        moreLabel: this.t(this.state.open[p.title] ? 'Less −' : 'More +'),
+        toggle: () => this.setState(st => ({ open: { ...st.open, [p.title]: !st.open[p.title] } }))
+      }));
+    return {
+      scrolled: this.state.scrolled,
+      progressPct: this.state.progressPct,
+      heroShift: Math.round(Math.min(this.state.y, 900) * -0.06) + 'px',
+      dockOpacity: this.state.dockShown ? 1 : 0,
+      dockShift: this.state.dockShown ? '0px' : '14px',
+      dockPointer: this.state.dockShown ? 'auto' : 'none',
+      lightboxOpen: !!this.state.activeReel,
+      activeReelTitle: this.state.activeReel ? this.state.activeReel.title : '',
+      activeReelPlatform: this.state.activeReel ? this.state.activeReel.platform : '',
+      activeReelEmbed: this.state.activeReel ? this.state.activeReel.embed : '',
+      activeReelUrl: this.state.activeReel ? this.state.activeReel.url : '',
+      activeReelOpenLabel: this.state.activeReel ? this.t('Open on ' + this.state.activeReel.platform) : '',
+      closeLightbox: () => this.setState({ activeReel: null }),
+      reels: this.reelData().map((r, i) => ({ ...r, slotId: 'reel-cover-' + (i + 1), open: () => this.setState({ activeReel: { ...r, i } }) })),
+      activeNav: this.state.activeNav,
+      navTo: (item) => {
+        const el = document.getElementById(item === 'Home' ? 'home' : item.toLowerCase());
+        if (el) window.scrollTo({ top: el.offsetTop - 68, behavior: 'smooth' });
+      },
+      projectLayout: this.props.projectLayout ?? 'cards',
+      isCards: (this.props.projectLayout ?? 'cards') === 'cards',
+      isRows: (this.props.projectLayout ?? 'cards') === 'rows',
+      showAccomplishments: this.props.showAccomplishments ?? true,
+      roleWord: this.t((this.roles || [{ word: 'Mechatronics engineering' }])[this.state.roleIdx].word),
+      roleHue: (this.roles || [{ hue: '#7DBFC4' }])[this.state.roleIdx].hue || '#7DBFC4',
+      roleOpacity: this.state.roleVisible ? 1 : 0,
+      copyLabel: this.t(this.state.copied ? 'Copied ✓' : 'Copy email'),
+      liHint: this.t(this.state.liCopied ? 'Link copied ✓' : 'LinkedIn'),
+      openLinkedIn: (e) => {
+        const url = 'https://www.linkedin.com/in/hasan-abuzaid-/';
+        e.preventDefault();
+        try { navigator.clipboard && navigator.clipboard.writeText(url); } catch (err) {}
+        this.setState({ liCopied: true });
+        clearTimeout(this.liTimer);
+        this.liTimer = setTimeout(() => this.setState({ liCopied: false }), 2600);
+        window.open(url, '_blank', 'noopener');
+      },
+      copyEmail: () => {
+        const email = 'hasan.abuzaid04@gmail.com';
+        const done = () => {
+          this.setState({ copied: true });
+          setTimeout(() => this.setState({ copied: false }), 1800);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(email).then(done).catch(() => {});
+        } else {
+          try {
+            const ta = document.createElement('textarea');
+            ta.value = email; ta.style.position = 'fixed'; ta.style.opacity = '0';
+            document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+            document.body.removeChild(ta); done();
+          } catch (err) {}
+        }
+      },
+      prevReel: (e) => { if (e) e.stopPropagation(); this.stepReel(-1); },
+      nextReel: (e) => { if (e) e.stopPropagation(); this.stepReel(1); },
+      stopClick: (e) => e.stopPropagation(),
+      reelCounter: this.state.activeReel ? (this.state.activeReel.i + 1) + ' / ' + this.reelData().length : '',
+      navItems: [
+        { id: 'about', label: 'About', hue: '#C48D9E', match: 'About' },
+        { id: 'education', label: 'Education', hue: '#8FA68E', match: 'Education' },
+        { id: 'engineering', label: 'Work', hue: '#7DBFC4', match: 'Engineering' },
+        { id: 'videography', label: 'Film', hue: '#C48D7D', match: 'Videography' },
+        { id: 'contact', label: 'Contact', hue: '#7DA8C4', match: 'Contact' }
+      ].map(c => {
+        const on = this.state.activeNav === c.match;
+        return { ...c, label: this.t(c.label), go: () => this.jump(c.id), navBg: on ? 'rgba(255,255,255,0.05)' : 'transparent', navColor: on ? c.hue : '#8A93A0', underline: on ? 1 : 0 };
+      }),
+      chapters: this.chapterList().map(c => {
+        const on = this.state.activeNav === c.label;
+        return { ...c, label: this.t(c.label), go: () => this.jump(c.id),
+          navBg: on ? 'rgba(255,255,255,0.05)' : 'transparent',
+          navColor: on ? c.hue : '#8A93A0',
+          underline: on ? 1 : 0,
+          dotH: on ? '26px' : '12px', dotBg: on ? c.hue : '#2A323C', labelOpacity: on ? 1 : 0, labelWidth: on ? '120px' : '0px' };
+      }),
+      liveHue: this.currentHue(),
+      setEN: () => this.setLang('en'),
+      setDE: () => this.setLang('de'),
+      enBg: this.state.lang === 'en' ? 'rgba(255,255,255,0.08)' : 'transparent',
+      enColor: this.state.lang === 'en' ? '#E7EBF0' : '#5C646F',
+      deBg: this.state.lang === 'de' ? 'rgba(255,255,255,0.08)' : 'transparent',
+      deColor: this.state.lang === 'de' ? '#E7EBF0' : '#5C646F',
+      navBg: this.state.scrolled ? 'rgba(10,12,16,0.74)' : 'rgba(10,12,16,0)',
+      navBlur: this.state.scrolled ? 'blur(16px) saturate(1.5)' : 'blur(0px)',
+      navBorder: this.state.scrolled ? this.currentHue() + '38' : 'rgba(35,42,52,0)',
+      ctaBg: 'rgba(255,255,255,0.02)',
+      ctaBorder: this.currentHue() + '66',
+      ctaColor: this.currentHue(),
+      goHome: (e) => { if (e) e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); },
+      liveGlow: this.currentHue() + '99',
+      filters: ['All', 'Vision', 'Embedded', 'Control', 'Hardware', 'Apps'].map(label => {
+        const all = this.projectData();
+        const count = label === 'All' ? all.length : all.filter(p => p.cat === label).length;
+        const on = this.state.filter === label;
+        return {
+          label: this.t(label), count,
+          bg: on ? 'rgba(125,191,196,0.16)' : 'transparent',
+          border: on ? 'rgba(125,191,196,0.55)' : '#2A323C',
+          color: on ? '#9AD3D8' : '#8A93A0',
+          pick: () => this.setState({ filter: label })
+        };
+      }),
+      projects: mapped,
+      featured: mapped.slice(0, 3),
+      moreProjects: mapped.slice(3),
+      hasMoreProjects: mapped.length > 3,
+      moreCount: Math.max(0, mapped.length - 3) + ' ' + this.t('more')
+    };
+  }
+  t(s) {
+    if (this.state.lang !== 'de') return s;
+    const d = window.PORTFOLIO_DE || {};
+    return d[s] || s;
+  }
+  deReverse() {
+    if (this._rev) return this._rev;
+    const d = window.PORTFOLIO_DE || {};
+    this._rev = {};
+    Object.keys(d).forEach(en => { if (d[en] && !this._rev[d[en]]) this._rev[d[en]] = en; });
+    return this._rev;
+  }
+  applyLang(lang) {
+    const d = window.PORTFOLIO_DE || {};
+    const rev = this.deReverse();
+    if (!this.enText) this.enText = new WeakMap();
+    const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walk.nextNode()) nodes.push(walk.currentNode);
+    nodes.forEach(n => {
+      const parent = n.parentElement;
+      if (!parent || parent.closest('header') || parent.closest('nav[aria-label="Sections"]')) return;
+      if (parent.hasAttribute && parent.hasAttribute('data-word')) return;
+      const cur = n.nodeValue;
+      const key = cur.trim();
+      if (!key) return;
+      // record the ENGLISH source once, self-healing if the node is currently German
+      if (!this.enText.has(n)) this.enText.set(n, rev[key] ? cur.replace(key, rev[key]) : cur);
+      const en = this.enText.get(n);
+      const enKey = en.trim();
+      const want = (lang === 'de' && d[enKey]) ? en.replace(enKey, d[enKey]) : en;
+      if (cur !== want) n.nodeValue = want;
+    });
+    document.querySelectorAll('section h2[data-split]').forEach(h => {
+      const en = h.dataset.en || '';
+      const text = (lang === 'de' && d[en]) ? d[en] : en;
+      if (h.dataset.rendered === text) return;
+      h.dataset.rendered = text;
+      h.textContent = '';
+      text.split(/(\s+)/).forEach(tok => {
+        if (!tok.trim()) { h.appendChild(document.createTextNode(' ')); return; }
+        const s = document.createElement('span');
+        s.setAttribute('data-word', 'in');
+        s.textContent = tok;
+        h.appendChild(s);
+      });
+    });
+    document.documentElement.setAttribute('lang', lang);
+    try { localStorage.setItem('portfolio-lang', lang); } catch (e) {}
+  }
+  componentDidUpdate() {
+    if (this.state.lang === 'de') this.applyLang('de');
+  }
+  setLang(lang) {
+    this.setState({ lang }, () => this.applyLang(lang));
+  }
+  reelData() {
+    return [
+      { title: 'Reel 01', cover: 'uploads/pasted-1787744057634-0.png', platform: 'Instagram', url: 'https://www.instagram.com/p/DW_aPcqDWIO/', embed: 'https://www.instagram.com/p/DW_aPcqDWIO/embed/' },
+      { title: 'Reel 02', cover: 'uploads/pasted-1787744092050-0.png', platform: 'Instagram', url: 'https://www.instagram.com/reel/DSezLImgnjJ/', embed: 'https://www.instagram.com/reel/DSezLImgnjJ/embed/' },
+      { title: 'Reel 03', cover: 'uploads/pasted-1787744114060-0.png', platform: 'Instagram', url: 'https://www.instagram.com/reel/DJmqQ6fqu9d/', embed: 'https://www.instagram.com/reel/DJmqQ6fqu9d/embed/' },
+      { title: 'Reel 04', cover: 'uploads/pasted-1787744141616-0.png', platform: 'Instagram', url: 'https://www.instagram.com/reel/DYCKnnSsvN0/', embed: 'https://www.instagram.com/reel/DYCKnnSsvN0/embed/' },
+      { title: 'Reel 05', cover: 'uploads/pasted-1787744013226-0.png', platform: 'Facebook', url: 'https://www.facebook.com/share/v/19T5Sm4GLf/', embed: 'https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fv%2F19T5Sm4GLf%2F&show_text=false' }
+    ];
+  }
+  stepReel(d) {
+    const all = this.reelData();
+    const cur = this.state.activeReel ? this.state.activeReel.i : 0;
+    const i = (cur + d + all.length) % all.length;
+    this.setState({ activeReel: { ...all[i], i } });
+  }
+  chapterList() {
+    return [
+      { id: 'about', label: 'About', hue: '#C48D9E' },
+      { id: 'education', label: 'Education', hue: '#8FA68E' },
+      { id: 'experience', label: 'Experience', hue: '#C4A47D' },
+      { id: 'engineering', label: 'Engineering', hue: '#7DBFC4' },
+      { id: 'videography', label: 'Videography', hue: '#C48D7D' },
+      { id: 'leadership', label: 'Leadership', hue: '#9D93C4' },
+      { id: 'accomplishments', label: 'Accomplishments', hue: '#8FA68E' },
+      { id: 'contact', label: 'Contact', hue: '#7DA8C4' }
+    ];
+  }
+  currentHue() {
+    const c = this.chapterList().find(x => x.label === this.state.activeNav);
+    return c ? c.hue : '#7DA8C4';
+  }
+  jump(id) {
+    const el = document.getElementById(id);
+    if (el) window.scrollTo({ top: el.offsetTop - 68, behavior: 'smooth' });
+  }
+  projectData() {
+    return [
+      {
+        title: 'Hydroponic Sensor Node PCB',
+        cat: 'Hardware',
+        kicker: 'KiCad → JLCPCB',
+        short: 'Four-sensor ESP32 board, designed in KiCad and fabricated at JLCPCB.',
+        long: 'Analog front-ends for TDS/EC and pH, routed to keep calibration stable off the breadboard.',
+        tags: ['KiCad', 'PCB layout', 'Analog front-end'],
+        href: 'https://github.com/hasan-abuzaid/PCB-nft-1', action: 'View on GitHub'
+      },
+      {
+        title: 'Gesture-Based Access Control',
+        cat: 'Vision',
+        kicker: 'Graduation project',
+        short: 'MediaPipe gestures on a Raspberry Pi drive a Delta PLC to actuate access hardware.',
+        long: 'Vision → embedded compute → PLC → physical action.',
+        tags: ['MediaPipe', 'Delta PLC', 'NI myRIO', 'Raspberry Pi'],
+        href: 'https://github.com/hasan-abuzaid/gesture-access-control-system', action: 'View on GitHub'
+      },
+      {
+        title: 'Ball-on-Plate LQR Balancing',
+        cat: 'Control',
+        kicker: 'Closed-loop control',
+        short: 'OpenCV tracking feeds an LQR controller that keeps a ball centred on a tilting plate.',
+        long: 'State-space control with vision-latency compensation.',
+        tags: ['OpenCV', 'LQR', 'Arduino Mega'],
+        href: 'https://github.com/hasan-abuzaid/ball-on-plate-project', action: 'View on GitHub'
+      },
+      {
+        title: 'Hydroponic Sensing & Control Firmware',
+        cat: 'Embedded',
+        kicker: 'Nexus Nature — in production',
+        short: 'ESP32 node for TDS/EC, pH and water level, reporting to Home Assistant over MQTT.',
+        long: 'Custom TDS correction and two-point pH calibration. Runs in production.',
+        tags: ['ESP32', 'ESPHome', 'MQTT', 'ADS1115'],
+        href: 'https://github.com/hasan-abuzaid/nft-hydroponic-controller', action: 'View on GitHub'
+      },
+      {
+        title: 'YOLOv11 PCB Defect Detection',
+        cat: 'Vision',
+        kicker: '83.4% mAP@0.5',
+        short: 'Detects PCB manufacturing defects — 83.4% mAP@0.5.',
+        long: 'Trained on DSPCBSD. 81% precision, 78% recall.',
+        tags: ['YOLOv11', 'PyTorch', 'Machine vision'],
+        href: 'https://github.com/hasan-abuzaid/pcb-defect-detection', action: 'View on GitHub'
+      },
+      {
+        title: 'FieldIQ — Football Scouting Analytics',
+        cat: 'Vision',
+        kicker: 'Third place, scouting hackathon',
+        short: 'Player tracking and re-identification on a Jetson Orin Nano.',
+        long: 'The architecture is the asset — multi-object tracking with re-ID on constrained edge compute is a genuinely hard problem. The venture itself is parked; the pipeline carries forward.',
+        tags: ['YOLOv8', 'ByteTrack', 'ArcFace', 'Jetson Orin'],
+        href: null, action: 'Repo not public'
+      },
+      {
+        title: 'NFT Pipe Interface Component',
+        cat: 'Hardware',
+        kicker: 'AutoCAD → 3D print',
+        short: 'Custom 3D-printed part fixing a pipe failure in a live hydroponic system.',
+        long: 'No off-the-shelf fitting existed at the right geometry, so the choice was compromising the channel design or making the part. The full mechanical loop — identify the failure, model to existing hardware, print, install, verify under continuous flow — inside a system that is actually running.',
+        tags: ['AutoCAD', '3D printing', 'Mechanical design'],
+        href: null, action: 'Repo not public'
+      },
+      {
+        title: 'PLC Sorting Line',
+        cat: 'Control',
+        kicker: 'Industrial automation',
+        short: 'Delta PLC logic and HMI for a conveyor sorter.',
+        long: 'Built against real automation constraints: signal noise on the sensors, actuator timing, and an operator-facing HMI rather than a serial monitor.',
+        tags: ['Delta PLC', 'Ladder logic', 'HMI'],
+        href: null, action: 'Repo not public'
+      },
+      {
+        title: 'Dukkan — Shop Management',
+        cat: 'Apps',
+        kicker: 'Built for one real user',
+        short: 'Inventory tool for a shop owner, backed by Google Sheets.',
+        long: 'Not the hardest engineering here, and it earns its slot for a different reason: it was built for a non-technical owner\'s daily workflow, and it skips a database because a spreadsheet they already understand does the job.',
+        tags: ['Google Sheets API', 'App', 'Pragmatism'],
+        href: 'https://github.com/hasan-abuzaid/dukkan-manager', action: 'View on GitHub'
+      }
+    ];
+  }
+}
+</script>
+</body>
+</html>
